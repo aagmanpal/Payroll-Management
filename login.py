@@ -1,14 +1,28 @@
 from tkinter import *
 from tkinter import messagebox
 
+#Functions Defining
+
 def login():
     if usernameentry.get()=='' or passwordentry.get()=='':
          messagebox.showerror('Error','Fields cannot be empty!')
     elif usernameentry.get()=='aagmanpal' and passwordentry.get()=='123':
         messagebox.showinfo('Success',"You've been logged in sucessfully!")
         root.destroy()
+        main()
     else:
-        messagebox.showerror('Incorrect details','Please enter correct username and password!')
+        messagebox.showerror('Incorrect details','Please enter correct credentials!')
+
+def main():
+    window=Tk()
+    window.title('Payroll Management System | Developed by Aagman, Shivaansh, Pranjal')
+    window.geometry('1200x700+150+35')
+    window.state('zoomed')
+    
+    
+    window.mainloop()
+
+#GUI Part
 
 root = Tk()
 root.geometry("626x417+400+150")
