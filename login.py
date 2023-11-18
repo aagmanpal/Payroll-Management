@@ -17,6 +17,7 @@ def main():
     window=Tk()
     window.title('Payroll Management System | Developed by Aagman, Shivaansh, Pranjal')
     window.geometry('1200x700+150+35')
+    window.minsize(1200,700)
     window.state('zoomed')
     
     
