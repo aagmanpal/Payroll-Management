@@ -20,7 +20,7 @@ def main():
 
 
 def login():
-    global admin
+    
     root = Tk()
     root.geometry("626x417+400+150")
     root.resizable(False,False)
@@ -45,11 +45,19 @@ def login():
     passwordentry = Entry(loginframe,font=('helvetica',14),bd=3,fg='grey10')
     passwordentry.grid(row=2,column=2)
 
+    def run():
+        if admin_flag.get()==True:
+            loginbutton = Button(loginframe,text='Login as Admin',font=('times new roman',14),width=12,bg='black',fg='white',activebackground='black',activeforeground='white',cursor='hand2',command=adminlogin)
+            loginbutton.grid(row=3,column=1,pady=40)
+        else:
+            loginbutton = Button(loginframe,text='Employee Login',font=('times new roman',14),width=12,bg='black',fg='white',activebackground='black',activeforeground='white',cursor='hand2',command=emplogin)
+            loginbutton.grid(row=3,column=1,pady=40)
+        
     
     admin_flag= BooleanVar()
-    
-    checkbox=Checkbutton(root,text='Login as Admin',variable=admin_flag,font=('helvetica',10))
+    checkbox=Checkbutton(root,text='Login as Admin',variable=admin_flag,font=('helvetica',10),command=run)
     checkbox.place(x=252,y=285)
+    
     
     def emplogin():
         if usernameentry.get()=='' or passwordentry.get()=='':
@@ -71,12 +79,7 @@ def login():
         else:
             messagebox.showerror('Incorrect details','Please enter correct credentials!')
         
-    if admin_flag.get():
-        loginbutton = Button(loginframe,text='Login as Admin',font=('times new roman',14),width=12,bg='black',fg='white',activebackground='black',activeforeground='white',cursor='hand2',command=adminlogin)
-        loginbutton.grid(row=3,column=1,pady=40)
-    else:
-        loginbutton = Button(loginframe,text='Employee Login',font=('times new roman',14),width=12,bg='black',fg='white',activebackground='black',activeforeground='white',cursor='hand2',command=emplogin)
-        loginbutton.grid(row=3,column=1,pady=40)
+    run()
     
     root.mainloop() 
 
