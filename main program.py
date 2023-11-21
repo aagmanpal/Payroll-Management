@@ -40,6 +40,9 @@ def adminlogin():
 #Main program for Employee
 def main_emp():
     print("*"*70,"Employee Window Panel","*"*70)
+    while True:
+        print("1. See your Personal Information")
+        print("2. ")
 
 # Main Program for Admins
 def main_admin():
