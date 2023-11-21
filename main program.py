@@ -11,7 +11,7 @@ cursor.execute("CREATE DATABASE IF NOT EXISTS PAYROLL;")
 cursor.execute("USE PAYROLL;")
 
 #Login system
-emp_credentials = []
+emp_credentials = [['aagman','pass'],['shivaansh','pass']]
 admin_credentials = [['aagman','123'],['shivaansh','123']]
 #login for employee
 def emplogin():
@@ -50,7 +50,7 @@ def main_admin():
 
 
 
-
+#Program
 while True:
     print("*"*70,"Select User Type","*"*70)
     print("1. Employee\n2. Admin")
