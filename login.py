@@ -8,12 +8,29 @@ admins = [['aagman','123'],['shivaansh','123']]
 
 
 
-def main():
+def empmain():
     window=Tk()
     window.title('Payroll Management System | Developed by Aagman, Shivaansh, Pranjal')
     window.geometry('1200x700+150+35')
     window.minsize(1200,700)
-    window.state('zoomed')
+    window.resizable(False,False)
+    
+    #===========Header Frame===========
+    header_frame = Frame(window,bg='#228B22')
+    header_frame.place(x=0,y=0,height=60,width=1200)
+    header_image=PhotoImage(file='salary.png')
+    header_text=Label(header_frame,image=header_image,text='PAYROLL SYSTEM',font=('helvetica',28,'bold'),compound=LEFT,fg='black',bg='#228B22')
+    header_text.place(x=490,y=3)
+    
+    #==========Menu Panel Frame=========
+    left_frame = Frame(window,bg='white')
+    left_frame.place(x=0,y=60,width=350,height=620)
+    #==========Right Frame=============
+    
+    #==========Footer Frame============
+    footer_frame = Frame(window,bg='#228B22')
+    footer_frame.place(x=0,y=680,width=1200,height=20)
+    
     
     
     window.mainloop()
@@ -65,7 +82,7 @@ def login():
         elif [usernameentry.get(),passwordentry.get()] in emp:
             messagebox.showinfo('Success',"You've been logged in sucessfully!")
             root.destroy()
-            main()
+            empmain()
         else:
             messagebox.showerror('Incorrect details','Please enter correct credentials!')
         
@@ -75,7 +92,7 @@ def login():
         elif [usernameentry.get(),passwordentry.get()] in admins:
             messagebox.showinfo('Success',"You've been logged in sucessfully!")
             root.destroy()
-            main()
+            empmain()
         else:
             messagebox.showerror('Incorrect details','Please enter correct credentials!')
         
@@ -84,4 +101,4 @@ def login():
     root.mainloop() 
 
 
-login()
+empmain()
