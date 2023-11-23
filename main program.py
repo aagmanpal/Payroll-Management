@@ -35,7 +35,16 @@ def adminlogin():
         main_admin()
     else:
         messagebox.showerror('Incorrect details','Please enter correct credentials!')
-            
+
+#login for employee by pressing enter
+def emplogin_enter(event):
+    if event.state == 0 and event.keysym == "Return":
+            emplogin()
+
+#login for admin by pressing enter
+def adminlogin_enter(event):
+    if event.state == 0 and event.keysym == "Return":
+            adminlogin()
 
 #Main program for Employee
 def main_emp():
@@ -64,6 +73,7 @@ while True:
         root.resizable(False,False)
         root.title("Employee Login Page")
         root.attributes('-topmost',True)
+        root.iconbitmap("user.ico")
         loginframe = Frame(root)
         loginframe.place(x=70,y=40)
 
@@ -75,15 +85,17 @@ while True:
         usernamelabel = Label(loginframe,image=userimage,text=" Username:",compound=LEFT,font=('times new roman',18,'bold'))
         usernamelabel.grid(row=1,column=0)
         usernameentry = Entry(loginframe,font=('helvetica',14),bd=3,fg='grey10')
+        usernameentry.bind("<KeyPress>", emplogin_enter)
         usernameentry.grid(row=1,column=2)
 
         padlock = PhotoImage(file="padlock.png")
         passwordlabel = Label(loginframe,image=padlock,text=" Password:",compound=LEFT,font=('times new roman',18,'bold'))
         passwordlabel.grid(row=2,column=0)
         passwordentry = Entry(loginframe,font=('helvetica',14),bd=3,fg='grey10')
+        passwordentry.bind("<KeyPress>", emplogin_enter)
         passwordentry.grid(row=2,column=2)
 
-        loginbutton = Button(loginframe,text='Login as Employee',font=('times new roman',14),width=12,bg='black',fg='white',activebackground='black',activeforeground='white',cursor='hand2',command=emplogin)
+        loginbutton = Button(loginframe,text='Login',font=('times new roman',14),width=12,bg='black',fg='white', border = 0, activebackground='black',activeforeground='white',cursor='hand2',command=emplogin)
         loginbutton.grid(row=3,column=1,pady=20)
         
         root.mainloop() 
@@ -94,6 +106,7 @@ while True:
         root.geometry("626x417+400+150")
         root.resizable(False,False)
         root.title("Admin Login Page")
+        root.iconbitmap("user.ico")
         root.attributes('-topmost',True)
         loginframe = Frame(root)
         loginframe.place(x=70,y=40)
@@ -106,15 +119,17 @@ while True:
         usernamelabel = Label(loginframe,image=userimage,text=" Username:",compound=LEFT,font=('times new roman',18,'bold'))
         usernamelabel.grid(row=1,column=0)
         usernameentry = Entry(loginframe,font=('helvetica',14),bd=3,fg='grey10')
+        usernameentry.bind("<KeyPress>", adminlogin_enter)
         usernameentry.grid(row=1,column=2)
 
         padlock = PhotoImage(file="padlock.png")
         passwordlabel = Label(loginframe,image=padlock,text=" Password:",compound=LEFT,font=('times new roman',18,'bold'))
         passwordlabel.grid(row=2,column=0)
         passwordentry = Entry(loginframe,font=('helvetica',14),bd=3,fg='grey10')
+        passwordentry.bind("<KeyPress>", adminlogin_enter)
         passwordentry.grid(row=2,column=2)
 
-        loginbutton = Button(loginframe,text='Login as Admin',font=('times new roman',14),width=12,bg='black',fg='white',activebackground='black',activeforeground='white',cursor='hand2',command=adminlogin)
+        loginbutton = Button(loginframe,text='Login',font=('times new roman',14),width=12,bg='black',fg='white', border = 0, activebackground='black',activeforeground='white',cursor='hand2',command=adminlogin)
         loginbutton.grid(row=3,column=1,pady=20)
         
         root.mainloop() 
