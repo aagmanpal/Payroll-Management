@@ -16,10 +16,10 @@ def empmain():
     window.resizable(False,False)
     
     #===========Header Frame===========
-    header_frame = Frame(window,bg='#228B22')
+    header_frame = Frame(window,bg='black')
     header_frame.place(x=0,y=0,height=60,width=1200)
     header_image=PhotoImage(file='salary.png')
-    header_text=Label(header_frame,image=header_image,text='PAYROLL SYSTEM',font=('Adobe Garamond Pro',28,'bold'),compound=LEFT,fg='black',bg='#228B22')
+    header_text=Label(header_frame,image=header_image,text='PAYROLL SYSTEM',font=('Adobe Garamond Pro',28,'bold'),compound=LEFT,fg='white',bg='black')
     header_text.place(x=420,y=3)
     
     #==========Menu Panel Frame=========
@@ -28,8 +28,10 @@ def empmain():
     #==========Right Frame=============
     
     #==========Footer Frame============
-    footer_frame = Frame(window,bg='#228B22')
+    footer_frame = Frame(window,bg='black')
     footer_frame.place(x=0,y=680,width=1200,height=20)
+    footer_text=Label(footer_frame,text='Developed by Aagman,Shivaansh, and Pranjal--Class 12th A',font=('helvetica',10,'bold'),fg='white',bg='black')
+    footer_text.place(x=415)
     
     
     
@@ -101,4 +103,4 @@ def login():
     root.mainloop() 
 
 
-login()
+empmain()
