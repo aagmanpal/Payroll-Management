@@ -35,6 +35,8 @@ def empmain():
     left_frame.rowconfigure(6, weight = 1)
     left_frame.rowconfigure(7, weight = 1)
     left_frame.rowconfigure(8, weight = 1)
+    left_frame.rowconfigure(9, weight = 1)
+    left_frame.rowconfigure(10, weight = 1)
     left_frame.place(x=0,y=60,width=350,height=558)
     
     #Defining btn functions
@@ -62,24 +64,34 @@ def empmain():
     def btn8_fun():
         pass
     
+    def btn9_fun():
+        pass
+    
+    def btn10_fun():
+        pass
+    
     leftframe_text = Label(left_frame, text = "Welcome Employee!", font=('Comic Sans MS',20), height = 1, border = 3,background='light goldenrod',relief=RIDGE)
     leftframe_text.grid(row = 0, column=0, sticky= E + W, padx = 5, pady = 2.5)
-    btn1 = Button(left_frame, text = "See Personal Details", font=('helvetica',14), height = 1, border = 0, command = btn1_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn1 = Button(left_frame, text = "Add Employee Record", font=('helvetica',10), height = 1, border = 0, command = btn1_fun, activebackground='gold', activeforeground='black',pady=5)
     btn1.grid(row = 1, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn2 = Button(left_frame, text = "Button 2", font=('helvetica',14), height = 1, border = 0, command = btn2_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn2 = Button(left_frame, text = "Display Record of All Employees", font=('helvetica',10), height = 1, border = 0, command = btn2_fun, activebackground='gold', activeforeground='black',pady=5)
     btn2.grid(row = 2, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn3 = Button(left_frame, text = "Button 3", font=('helvetica',14), height = 1, border = 0, command = btn3_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn3 = Button(left_frame, text = "Search record for a particular employee", font=('helvetica',10), height = 1, border = 0, command = btn3_fun, activebackground='gold', activeforeground='black',pady=5)
     btn3.grid(row = 3, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn4 = Button(left_frame, text = "Button 4", font=('helvetica',14), height = 1, border = 0, command = btn4_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn4 = Button(left_frame, text = "Delete records of all the employees", font=('helvetica',10), height = 1, border = 0, command = btn4_fun, activebackground='gold', activeforeground='black',pady=5)
     btn4.grid(row = 4, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn5 = Button(left_frame, text = "Button 5", font=('helvetica',14), height = 1, border = 0, command = btn5_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn5 = Button(left_frame, text = "Delete a record of a particular employee", font=('helvetica',10), height = 1, border = 0, command = btn5_fun, activebackground='gold', activeforeground='black',pady=5)
     btn5.grid(row = 5, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn6 = Button(left_frame, text = "Button 6", font=('helvetica',14), height = 1, border = 0, command = btn6_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn6 = Button(left_frame, text = "Modify a record", font=('helvetica',10), height = 1, border = 0, command = btn6_fun, activebackground='gold', activeforeground='black',pady=5)
     btn6.grid(row = 6, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn7 = Button(left_frame, text = "Button 7", font=('helvetica',14), height = 1, border = 0, command = btn7_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn7 = Button(left_frame, text = "Display Payroll", font=('helvetica',10), height = 1, border = 0, command = btn7_fun, activebackground='gold', activeforeground='black',pady=5)
     btn7.grid(row = 7, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn8 = Button(left_frame, text = "Button 8", font=('helvetica',14), height = 1, border = 0, command = btn8_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn8 = Button(left_frame, text = "Display salary slip of all employees", font=('helvetica',10), height = 1, border = 0, command = btn8_fun, activebackground='gold', activeforeground='black',pady=5)
     btn8.grid(row = 8, column=0, sticky= E + W, padx = 20, pady = 2.5)
+    btn9 = Button(left_frame, text = "Display salary slip of particular employee", font=('helvetica',10), height = 1, border = 0, command = btn9_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn9.grid(row = 9, column=0, sticky= E + W, padx = 20, pady = 2.5)
+    btn10 = Button(left_frame, text = "Logout", font=('helvetica',10), height = 1, border = 0, command = btn10_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn10.grid(row = 10, column=0, sticky= E + W, padx = 20, pady = 2.5)
     #==========Right Frame=============
     
     #==========Footer Frame============
