@@ -11,31 +11,90 @@ admins = [['aagman','123'],['shivaansh','123']]
 def empmain():
     window=Tk()
     window.title('Payroll Management System | Developed by Aagman, Shivaansh, Pranjal')
-    window.geometry('1200x700+150+35')
-    window.minsize(1200,700)
+    window.geometry('1200x640+30+0')
+    window.minsize(1200,640)
     window.resizable(False,False)
+    window.iconbitmap("salary.ico")
     
     #===========Header Frame===========
-    header_frame = Frame(window,bg='black')
-    header_frame.place(x=0,y=0,height=60,width=1200)
+    header_frame = Frame(window,bg='black', height=63, width = 1280)
+    header_frame.place(x=0,y=0)
     header_image=PhotoImage(file='salary.png')
     header_text=Label(header_frame,image=header_image,text='PAYROLL SYSTEM',font=('Adobe Garamond Pro',28,'bold'),compound=LEFT,fg='white',bg='black')
-    header_text.place(x=420,y=3)
+    header_text.place(x=440,y=3)
     
     #==========Menu Panel Frame=========
-    left_frame = Frame(window,bg='white')
-    left_frame.place(x=0,y=60,width=350,height=620)
+    left_frame = Frame(window, bg='black')
+    left_frame.columnconfigure(0, weight = 1)
+    left_frame.rowconfigure(0, weight = 1)
+    left_frame.rowconfigure(1, weight = 1)
+    left_frame.rowconfigure(2, weight = 1)
+    left_frame.rowconfigure(3, weight = 1)
+    left_frame.rowconfigure(4, weight = 1)
+    left_frame.rowconfigure(5, weight = 1)
+    left_frame.rowconfigure(6, weight = 1)
+    left_frame.rowconfigure(7, weight = 1)
+    left_frame.rowconfigure(8, weight = 1)
+
+    left_frame.place(x=0,y=60,width=350,height=558)
+    
+    btn1 = Button(left_frame, text = "Button 1", font=('helvetica',20), height = 1, border = 0, command = btn1_fun)
+    btn1.grid(row = 0, column=0, sticky= E + W, padx = 5, pady = 2.5)
+    btn2 = Button(left_frame, text = "Button 2", font=('helvetica',20), height = 1, border = 0, command = btn1_fun)
+    btn2.grid(row = 1, column=0, sticky= E + W, padx = 5, pady = 2.5)
+    btn3 = Button(left_frame, text = "Button 3", font=('helvetica',20), height = 1, border = 0, command = btn1_fun)
+    btn3.grid(row = 2, column=0, sticky= E + W, padx = 5, pady = 2.5)
+    btn4 = Button(left_frame, text = "Button 4", font=('helvetica',20), height = 1, border = 0, command = btn1_fun)
+    btn4.grid(row = 3, column=0, sticky= E + W, padx = 5, pady = 2.5)
+    btn5 = Button(left_frame, text = "Button 5", font=('helvetica',20), height = 1, border = 0, command = btn1_fun)
+    btn5.grid(row = 4, column=0, sticky= E + W, padx = 5, pady = 2.5)
+    btn6 = Button(left_frame, text = "Button 6", font=('helvetica',20), height = 1, border = 0, command = btn1_fun)
+    btn6.grid(row = 5, column=0, sticky= E + W, padx = 5, pady = 2.5)
+    btn7 = Button(left_frame, text = "Button 7", font=('helvetica',20), height = 1, border = 0, command = btn1_fun)
+    btn7.grid(row = 6, column=0, sticky= E + W, padx = 5, pady = 2.5)
+    btn8 = Button(left_frame, text = "Button 8", font=('helvetica',20), height = 1, border = 0, command = btn1_fun)
+    btn8.grid(row = 7, column=0, sticky= E + W, padx = 5, pady = 2.5)
+    btn9 = Button(left_frame, text = "Button 9", font=('helvetica',20), height = 1, border = 0, command = btn1_fun)
+    btn9.grid(row = 8, column=0, sticky= E + W, padx = 5, pady = 2.5)
     #==========Right Frame=============
     
     #==========Footer Frame============
-    footer_frame = Frame(window,bg='black')
-    footer_frame.place(x=0,y=680,width=1200,height=20)
+    footer_frame = Frame(window,bg='black',width=1200,height=25)
+    footer_frame.place(x=0,y=615)
     footer_text=Label(footer_frame,text='Developed by Aagman,Shivaansh, and Pranjal--Class 12th A',font=('helvetica',10,'bold'),fg='white',bg='black')
-    footer_text.place(x=415)
+    footer_text.place(x=435)
     
     
     
     window.mainloop()
+
+    #Defining btn functions
+def btn1_fun():
+    pass
+
+def btn2_fun():
+    pass
+
+def btn3_fun():
+    pass
+
+def btn4_fun():
+    pass
+
+def btn5_fun():
+    pass
+
+def btn6_fun():
+    pass
+
+def btn7_fun():
+    pass
+
+def btn8_fun():
+    pass
+
+def btn9_fun():
+    pass
 
 
 def login():
