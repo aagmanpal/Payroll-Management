@@ -19,8 +19,8 @@ def empmain():
     header_frame = Frame(window,bg='#228B22')
     header_frame.place(x=0,y=0,height=60,width=1200)
     header_image=PhotoImage(file='salary.png')
-    header_text=Label(header_frame,image=header_image,text='PAYROLL SYSTEM',font=('helvetica',28,'bold'),compound=LEFT,fg='black',bg='#228B22')
-    header_text.place(x=490,y=3)
+    header_text=Label(header_frame,image=header_image,text='PAYROLL SYSTEM',font=('Adobe Garamond Pro',28,'bold'),compound=LEFT,fg='black',bg='#228B22')
+    header_text.place(x=420,y=3)
     
     #==========Menu Panel Frame=========
     left_frame = Frame(window,bg='white')
@@ -101,4 +101,4 @@ def login():
     root.mainloop() 
 
 
-empmain()
+login()
