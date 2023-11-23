@@ -11,7 +11,7 @@ admins = [['aagman','123'],['shivaansh','123']]
 def empmain():
     window=Tk()
     window.title('Payroll Management System | Developed by Aagman, Shivaansh, Pranjal')
-    window.geometry('1200x640+30+0')
+    window.geometry('1200x640+150+60')
     window.minsize(1200,640)
     window.resizable(False,False)
     window.iconbitmap("salary.ico")
