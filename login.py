@@ -35,8 +35,35 @@ def empmain():
     left_frame.rowconfigure(6, weight = 1)
     left_frame.rowconfigure(7, weight = 1)
     left_frame.rowconfigure(8, weight = 1)
-
     left_frame.place(x=0,y=60,width=350,height=558)
+    
+    #Defining btn functions
+    def btn1_fun():
+        pass
+
+    def btn2_fun():
+        pass
+
+    def btn3_fun():
+        pass
+
+    def btn4_fun():
+        pass
+
+    def btn5_fun():
+        pass
+
+    def btn6_fun():
+        pass
+
+    def btn7_fun():
+        pass
+
+    def btn8_fun():
+        pass
+
+    def btn9_fun():
+        pass
     
     btn1 = Button(left_frame, text = "Button 1", font=('helvetica',20), height = 1, border = 0, command = btn1_fun)
     btn1.grid(row = 0, column=0, sticky= E + W, padx = 5, pady = 2.5)
@@ -68,33 +95,7 @@ def empmain():
     
     window.mainloop()
 
-    #Defining btn functions
-def btn1_fun():
-    pass
-
-def btn2_fun():
-    pass
-
-def btn3_fun():
-    pass
-
-def btn4_fun():
-    pass
-
-def btn5_fun():
-    pass
-
-def btn6_fun():
-    pass
-
-def btn7_fun():
-    pass
-
-def btn8_fun():
-    pass
-
-def btn9_fun():
-    pass
+    
 
 
 def login():
