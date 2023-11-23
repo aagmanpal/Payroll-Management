@@ -67,8 +67,9 @@ def empmain():
     def btn9_fun():
         pass
     
-    def btn10_fun():
-        pass
+    def logout():
+        window.destroy()
+        login()
     
     leftframe_text = Label(left_frame, text = "Welcome Employee!", font=('Comic Sans MS',20), height = 1, border = 3,background='light goldenrod',relief=RIDGE)
     leftframe_text.grid(row = 0, column=0, sticky= E + W, padx = 5, pady = 2.5)
@@ -90,7 +91,7 @@ def empmain():
     btn8.grid(row = 8, column=0, sticky= E + W, padx = 20, pady = 2.5)
     btn9 = Button(left_frame, text = "Display salary slip of particular employee", font=('helvetica',10), height = 1, border = 0, command = btn9_fun, activebackground='gold', activeforeground='black',pady=5)
     btn9.grid(row = 9, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn10 = Button(left_frame, text = "Logout", font=('helvetica',10), height = 1, border = 0, command = btn10_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn10 = Button(left_frame, text = "Logout", font=('helvetica',10), height = 1, border = 0, command = logout, activebackground='gold', activeforeground='black',pady=5)
     btn10.grid(row = 10, column=0, sticky= E + W, padx = 20, pady = 2.5)
     #==========Right Frame=============
     
