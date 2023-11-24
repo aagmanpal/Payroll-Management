@@ -17,7 +17,7 @@ def adminmain():
     window.iconbitmap("salary.ico")
     
     #===========Header Frame===========
-    header_frame = Frame(window,bg='black', height=63, width = 1280)
+    header_frame = Frame(window,bg='black', height=60, width = 1280)
     header_frame.place(x=0,y=0)
     header_image=PhotoImage(file='salary.png')
     header_text=Label(header_frame,image=header_image,text='PAYROLL SYSTEM',font=('Adobe Garamond Pro',28,'bold'),compound=LEFT,fg='white',bg='black')
@@ -68,10 +68,11 @@ def adminmain():
         pass
     
     def logout():
+        messagebox.showinfo('Logging out','Logout  Successful!')
         window.destroy()
         login()
     
-    leftframe_text = Label(left_frame, text = "Welcome Employee!", font=('Comic Sans MS',20), height = 1, border = 3,background='light goldenrod',relief=RIDGE)
+    leftframe_text = Label(left_frame, text = "Welcome Employee!", font=('Comic Sans MS',20), height = 1, border = 3,background='burlywood1',relief=RIDGE)
     leftframe_text.grid(row = 0, column=0, sticky= E + W, padx = 5, pady = 2.5)
     btn1 = Button(left_frame, text = "Add Employee Record", font=('helvetica',10), height = 1, border = 0, command = btn1_fun, activebackground='gold', activeforeground='black',pady=5)
     btn1.grid(row = 1, column=0, sticky= E + W, padx = 20, pady = 2.5)
