@@ -16,14 +16,21 @@ def adminmain():
     window.resizable(False,False)
     window.iconbitmap("salary.ico")
     window.configure(bg='black')
-    #===========Header Frame===========
+    #===============================================Header Frame========================================================
     header_frame = Frame(window,bg='black', height=60, width = 1280)
     header_frame.place(x=0,y=0)
     header_image=PhotoImage(file='salary.png')
     header_text=Label(header_frame,image=header_image,text='PAYROLL SYSTEM',font=('Adobe Garamond Pro',28,'bold'),compound=LEFT,fg='white',bg='black')
     header_text.place(x=440,y=3)
     
-    #==========Menu Panel Frame=========
+    #=============================================Right Frame==============================================================
+    rightframe = Frame(window,bg='yellow')
+    rightframe.place(x=350,y=110,width=840,height=508)
+    rightframe_header = Frame(window, border = 2,background='burlywood1',relief=SOLID)
+    rightframe_header.place(x=350,y=60,width=840,height=50)
+    label = Label(rightframe_header,font=('times',20),bg='burlywood1')
+    label.pack(expand=True)
+    #==========================================Menu Panel Frame==============================================
     left_frame = Frame(window, bg='black')
     left_frame.columnconfigure(0, weight = 1)
     left_frame.rowconfigure(0, weight = 1)
@@ -39,9 +46,41 @@ def adminmain():
     left_frame.rowconfigure(10, weight = 1)
     left_frame.place(x=0,y=60,width=350,height=558)
     
-    #Defining btn functions
+    #=========================Button Active Function=========================================
+    def activebtn(n: int):
+        btn1.config(bg='#f0f0f0')
+        btn2.config(bg='#f0f0f0')
+        btn3.config(bg='#f0f0f0')
+        btn4.config(bg='#f0f0f0')
+        btn5.config(bg='#f0f0f0')
+        btn6.config(bg='#f0f0f0')
+        btn7.config(bg='#f0f0f0')
+        btn8.config(bg='#f0f0f0')
+        btn9.config(bg='#f0f0f0')
+        if n==1:
+            btn1.config(bg='gold',fg='black')
+        elif n==2:
+            btn2.config(bg='gold',fg='black')
+        elif n==3:
+            btn3.config(bg='gold',fg='black')
+        elif n==4:
+            btn4.config(bg='gold',fg='black')
+        elif n==5:
+            btn5.config(bg='gold',fg='black')
+        elif n==6:
+            btn6.config(bg='gold',fg='black')
+        elif n==7:
+            btn7.config(bg='gold',fg='black')
+        elif n==8:
+            btn8.config(bg='gold',fg='black')
+        elif n==9:
+            btn9.config(bg='gold',fg='black')
+    
+    #========================================================Defining Menu btn functions===========================================
     def addemp():
         rightframe.destroy()
+        label.config(text='Add Employee Record...')
+        activebtn(1)
         addemp_frame = Frame(window,bg='white')
         addemp_frame.columnconfigure(0, weight = 1)
         addemp_frame.columnconfigure(1, weight = 1)
@@ -117,69 +156,102 @@ def adminmain():
         def fun():
             pass
         #================================Buttons in Add Employee========================================================
-        button1 = Button(addemp_frame,text='Add Employee',command=fun,bg='#F4CE14',fg='black',font=('helvetica',14),bd=3,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        button1 = Button(addemp_frame,text='Add Employee',command=fun,bg='#FF6000',fg='black',font=('helvetica',14),bd=3,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
         button1.grid(row=6,column=0,columnspan=4)
 
     def btn2_fun():
-        pass
+        rightframe.destroy()
+        btn2frame = Frame(window,bg='yellow')
+        btn2frame.place(x=350,y=110,width=840,height=508)
+        label.config(text='Records of all Employee...')
+        activebtn(2)
+        
 
     def btn3_fun():
-        pass
+        rightframe.destroy()
+        btn3frame = Frame(window,bg='yellow')
+        btn3frame.place(x=350,y=110,width=840,height=508)
+        label.config(text='Search Record of a Particular Employee...')
+        activebtn(3)
+        
 
     def btn4_fun():
-        pass
+        rightframe.destroy()
+        btn4frame = Frame(window,bg='yellow')
+        btn4frame.place(x=350,y=110,width=840,height=508)
+        label.config(text='Delete Records of all Employees...')
+        activebtn(4)
 
     def btn5_fun():
-        pass
+        rightframe.destroy()
+        btn5frame = Frame(window,bg='yellow')
+        btn5frame.place(x=350,y=110,width=840,height=508)
+        label.config(text='Delete record of a Particular Employee...')
+        activebtn(5)
 
     def btn6_fun():
-        pass
+        rightframe.destroy()
+        btn6frame = Frame(window,bg='yellow')
+        btn6frame.place(x=350,y=110,width=840,height=508)
+        label.config(text='Modify a Record...')
+        activebtn(6)
 
     def btn7_fun():
-        pass
+        rightframe.destroy()
+        btn7frame = Frame(window,bg='yellow')
+        btn7frame.place(x=350,y=110,width=840,height=508)
+        label.config(text='Display Payroll...')
+        activebtn(7)
 
     def btn8_fun():
-        pass
+        rightframe.destroy()
+        btn8frame = Frame(window,bg='yellow')
+        btn8frame.place(x=350,y=110,width=840,height=508)
+        label.config(text='Salary Slip of all Employees...')
+        activebtn(8)
     
     def btn9_fun():
-        pass
+        rightframe.destroy()
+        btn9frame = Frame(window,bg='yellow')
+        btn9frame.place(x=350,y=110,width=840,height=508)
+        label.config(text='Salary Slip of a Particular Employee...')
+        activebtn(9)
     
     def logout():
         messagebox.showinfo('Logging out','Logout  Successful!')
         window.destroy()
         login()
     
-    leftframe_text = Label(left_frame, text = "Welcome Employee!", font=('Comic Sans MS',20), height = 1, border = 3,background='burlywood1',relief=RIDGE)
+    leftframe_text = Label(left_frame, text = "Welcome Admin!!!", font=('Comic Sans MS',20), height = 1, border = 3,background='burlywood1',relief=RIDGE)
     leftframe_text.grid(row = 0, column=0, sticky= E + W, padx = 5, pady = 2.5)
+    
+    
+                
     
     #======================Menu Buttons======================================================
     
-    btn1 = Button(left_frame, text = "Add Employee Record", font=('helvetica',10), height = 1, border = 0, command = addemp, activebackground='gold', activeforeground='black',pady=5)
+    btn1 = Button(left_frame, text = "Add Employee Record", font=('helvetica',10), height = 1, border = 0, command = addemp,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn1.grid(row = 1, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn2 = Button(left_frame, text = "Display Record of All Employees", font=('helvetica',10), height = 1, border = 0, command = btn2_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn2 = Button(left_frame, text = "Display Record of All Employees", font=('helvetica',10), height = 1, border = 0, command = btn2_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn2.grid(row = 2, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn3 = Button(left_frame, text = "Search Record for a Particular Employee", font=('helvetica',10), height = 1, border = 0, command = btn3_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn3 = Button(left_frame, text = "Search Record for a Particular Employee", font=('helvetica',10), height = 1, border = 0, command = btn3_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn3.grid(row = 3, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn4 = Button(left_frame, text = "Delete Records of all the Employees", font=('helvetica',10), height = 1, border = 0, command = btn4_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn4 = Button(left_frame, text = "Delete Records of all the Employees", font=('helvetica',10), height = 1, border = 0, command = btn4_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn4.grid(row = 4, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn5 = Button(left_frame, text = "Delete Record of a Particular Employee", font=('helvetica',10), height = 1, border = 0, command = btn5_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn5 = Button(left_frame, text = "Delete Record of a Particular Employee", font=('helvetica',10), height = 1, border = 0, command = btn5_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn5.grid(row = 5, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn6 = Button(left_frame, text = "Modify a Record", font=('helvetica',10), height = 1, border = 0, command = btn6_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn6 = Button(left_frame, text = "Modify a Record", font=('helvetica',10), height = 1, border = 0, command = btn6_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn6.grid(row = 6, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn7 = Button(left_frame, text = "Display Payroll", font=('helvetica',10), height = 1, border = 0, command = btn7_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn7 = Button(left_frame, text = "Display Payroll", font=('helvetica',10), height = 1, border = 0, command = btn7_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn7.grid(row = 7, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn8 = Button(left_frame, text = "Display Salary Slip of all Employees", font=('helvetica',10), height = 1, border = 0, command = btn8_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn8 = Button(left_frame, text = "Display Salary Slip of all Employees", font=('helvetica',10), height = 1, border = 0, command = btn8_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn8.grid(row = 8, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn9 = Button(left_frame, text = "Display Salary Slip of Particular Employee", font=('helvetica',10), height = 1, border = 0, command = btn9_fun, activebackground='gold', activeforeground='black',pady=5)
+    btn9 = Button(left_frame, text = "Display Salary Slip of Particular Employee", font=('helvetica',10), height = 1, border = 0, command = btn9_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn9.grid(row = 9, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn10 = Button(left_frame, text = "Logout", font=('helvetica',10), height = 1, border = 0, command = logout, activebackground='gold', activeforeground='black',pady=5)
+    btn10 = Button(left_frame, text = "Logout", font=('helvetica',10), height = 1, border = 0, command = logout,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn10.grid(row = 10, column=0, sticky= E + W, padx = 20, pady = 2.5)
     
-    #=============================================Right Frame==============================================================
-    rightframe = Frame(window,bg='yellow')
-    rightframe.place(x=350,y=110,width=840,height=508)
-    rightframe_header = Frame(window, border = 2,background='burlywood1',relief=SOLID)
-    rightframe_header.place(x=350,y=60,width=840,height=50)
+    
     #=============================================Footer Frame=============================================================
     footer_frame = Frame(window,bg='black',width=1200,height=25)
     footer_frame.place(x=0,y=615)
@@ -259,4 +331,4 @@ def login():
     root.mainloop() 
 
 
-login()
+adminmain()
