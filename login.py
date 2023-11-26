@@ -113,8 +113,11 @@ def adminmain():
         entry10.grid(column=3,row=4)
         entry11 = Entry(addemp_frame, textvariable=emp_add ,bg='lightyellow',bd=3,font=('Times new roman',16))
         entry11.grid(column=1,row=5,columnspan=3,sticky= E + W,padx=10)
+        #=====================Add Employee Button Function============================
+        def fun():
+            pass
         #================================Buttons in Add Employee========================================================
-        button1 = Button(addemp_frame,text='Add Employee',bg='#89CFF0',fg='black',font=('helvetica',14),bd=3,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        button1 = Button(addemp_frame,text='Add Employee',command=fun,bg='#F4CE14',fg='black',font=('helvetica',14),bd=3,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
         button1.grid(row=6,column=0,columnspan=4)
 
     def btn2_fun():
