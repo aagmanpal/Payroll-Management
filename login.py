@@ -1,8 +1,20 @@
 from tkinter import *
 from tkinter import messagebox
+import mysql.connector
+#=========Establishing a connection in Mysql==============
+connection = mysql.connector.connect(host='localhost',user='root',passwd='123')
+cursor = connection.cursor()
+cursor.execute('CREATE DATABASE IF NOT EXISTS PMS;')
+cursor.execute('USE PMS;')
+#==========creating table for login details============
+cursor.execute("CREATE TABLE IF NOT EXISTS ADMIN_CREDENTIALS (Username varchar(20) not null,Password varchar(20) not null);")
+#=========Adding default login details to table==========
+cursor.execute("INSERT INTO ADMIN_CREDENTIALS VALUES ('aagman','123'),('shivaansh','123');") #============Login Detail
+#===========================
+cursor.execute("Select * from admin_credentials;")
+admins = cursor.fetchall()
 
-emp = [['pranjal','pass'],['pallavi','pass'],['','']]
-admins = [['aagman','123'],['shivaansh','123'],['','']]
+
 
 #Functions Defining
 
@@ -141,7 +153,7 @@ def adminmain():
         entry4.grid(column=1,row=3)
         entry5 = OptionMenu(addemp_frame, emp_gender ,'Male','Female')
         entry5.config(bg='lightyellow')
-        entry5['menu'].config(bg='green')
+        entry5['menu'].config(bg='lightyellow')
         entry5.grid(column=1,row=4,sticky= E + W,padx=10)
         entry6 = Entry(addemp_frame, textvariable=emp_email ,bg='lightyellow',bd=3,font=('Times new roman',16))
         entry6.grid(column=3,row=0)
@@ -311,7 +323,7 @@ def login():
     def emplogin():
         if usernameentry.get()=='' or passwordentry.get()=='':
             messagebox.showerror('Error','Fields cannot be empty!')
-        elif [usernameentry.get(),passwordentry.get()] in emp:
+        elif (usernameentry.get(),passwordentry.get()) in emp:
             messagebox.showinfo('Success',"You've been logged in sucessfully!")
             root.destroy()
             empmain()
@@ -319,9 +331,9 @@ def login():
             messagebox.showerror('Incorrect details','Please enter correct credentials!')'''
         
     def adminlogin():
-        #if usernameentry.get()=='' or passwordentry.get()=='':
-            #messagebox.showerror('Error','Fields cannot be empty!')
-        if [usernameentry.get(),passwordentry.get()] in admins:
+        if usernameentry.get()=='' or passwordentry.get()=='':
+            messagebox.showerror('Error','Fields cannot be empty!')
+        elif (usernameentry.get(),passwordentry.get()) in admins:
             messagebox.showinfo('Success',"You've been logged in sucessfully!")
             root.destroy()
             adminmain()
@@ -334,4 +346,4 @@ def login():
     root.mainloop() 
 
 
-adminmain()
+login()
