@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from tkcalendar import DateEntry
 import mysql.connector
 #=========Establishing a connection in Mysql==============
 connection = mysql.connector.connect(host='localhost',user='root',passwd='123')
@@ -13,7 +14,8 @@ cursor.execute("INSERT INTO ADMIN_CREDENTIALS VALUES ('aagman','123'),('shivaans
 #===========================
 cursor.execute("Select * from admin_credentials;")
 admins = cursor.fetchall()
-
+#==========creating table for emp details===================
+cursor.execute("CREATE TABLE IF NOT EXISTS EMP_DETAILS (EMP_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,NAME VARCHAR(50) NOT NULL,DESIGNATION VARCHAR(30) NOT NULL,AGE INT NOT NULL,GENDER TEXT NOT NULL,EMAIL varchar(40) NOT NULL,DOB DATE NOT NULL,DOJ DATE NOT NULL,ACCOUNT_NO VARCHAR(15) NOT NULL,CONTACT_NO VARCHAR(14) NOT NULL,ADDRESS VARCHAR(50) NOT NULL);")
 
 
 #Functions Defining
@@ -157,9 +159,9 @@ def adminmain():
         entry5.grid(column=1,row=4,sticky= E + W,padx=10)
         entry6 = Entry(addemp_frame, textvariable=emp_email ,bg='lightyellow',bd=3,font=('Times new roman',16))
         entry6.grid(column=3,row=0)
-        entry7 = Entry(addemp_frame, textvariable=emp_dob ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry7 = DateEntry(addemp_frame, textvariable=emp_dob ,bg='lightyellow',bd=3,font=('Times new roman',16),date_pattern='dd/MM/yyyy')
         entry7.grid(column=3,row=1)
-        entry8 = Entry(addemp_frame, textvariable=emp_doj ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry8 = DateEntry(addemp_frame, textvariable=emp_doj ,bg='lightyellow',bd=3,font=('Times new roman',16),date_pattern='dd/MM/yyyy')
         entry8.grid(column=3,row=2)
         entry9 = Entry(addemp_frame, textvariable=emp_accno ,bg='lightyellow',bd=3,font=('Times new roman',16))
         entry9.grid(column=3,row=3)
@@ -168,10 +170,27 @@ def adminmain():
         entry11 = Entry(addemp_frame, textvariable=emp_add ,bg='lightyellow',bd=3,font=('Times new roman',16))
         entry11.grid(column=1,row=5,columnspan=3,sticky= E + W,padx=10)
         #=====================Add Employee Button Function============================
-        def fun():
-            pass
+        def saveemp():
+            try:
+                if emp_id.get()=='':
+                    messagebox.showerror("Error","Please Enter All Details first!!!")
+                else:
+                    cursor.execute("SELECT * FROM EMP_DETAILS WHERE EMP_ID=%s;"%(emp_id.get()))
+                    row = cursor.fetchone()
+                
+                    if row!=None:
+                        messagebox.showerror("Error",f"This Employee ID is already in Record!\nEmployee Name:{row[1]}")
+                    elif (emp_id.get()=='') or (emp_name.get()=='') or (emp_desig.get()=='') or (emp_age.get()=='') or (emp_gender.get()=='') or (emp_email.get()=='') or (emp_dob.get()=='') or (emp_doj.get()=='') or (emp_accno.get()=='') or (emp_contact.get()=='') or (emp_add.get()==''):
+                        messagebox.showerror("Empty Field","Please fill all the details first and then click on add employee button!")
+                    else:
+                        cursor.execute(f"INSERT INTO EMP_DETAILS VALUES ({emp_id.get()},'{emp_name.get()}','{emp_desig.get()}',{int(emp_age.get())},'{emp_gender.get()}','{emp_email.get()}',{str(emp_dob.get())},{str(emp_doj.get())},'{emp_accno.get()}','{str(emp_contact.get())}','{emp_add.get()}');")
+                        connection.commit()
+                        messagebox.showinfo("Added :)","Employee Added Successfully...")
+                        addemp()
+            except Exception as ex:
+                messagebox.showerror("Error",f"Error due to: {str(ex)}")
         #================================Buttons in Add Employee========================================================
-        button1 = Button(addemp_frame,text='Add Employee',command=fun,bg='#FF6000',fg='black',font=('helvetica',14),bd=3,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        button1 = Button(addemp_frame,text='Add Employee',command=saveemp,bg='#FF6000',fg='black',font=('helvetica',14),bd=3,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
         button1.grid(row=6,column=0,columnspan=4)
 
     def btn2_fun():
