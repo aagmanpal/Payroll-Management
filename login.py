@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkcalendar import DateEntry
 import mysql.connector
+from datetime import datetime
 #=========Establishing a connection in Mysql==============
 connection = mysql.connector.connect(host='localhost',user='root',passwd='123')
 cursor = connection.cursor()
@@ -177,13 +178,24 @@ def adminmain():
                 else:
                     cursor.execute("SELECT * FROM EMP_DETAILS WHERE EMP_ID=%s;"%(emp_id.get()))
                     row = cursor.fetchone()
-                
+                    if emp_gender.get()=='Select':
+                        emp_gender.set('')
                     if row!=None:
                         messagebox.showerror("Error",f"This Employee ID is already in Record!\nEmployee Name:{row[1]}")
                     elif (emp_id.get()=='') or (emp_name.get()=='') or (emp_desig.get()=='') or (emp_age.get()=='') or (emp_gender.get()=='') or (emp_email.get()=='') or (emp_dob.get()=='') or (emp_doj.get()=='') or (emp_accno.get()=='') or (emp_contact.get()=='') or (emp_add.get()==''):
                         messagebox.showerror("Empty Field","Please fill all the details first and then click on add employee button!")
+                        if emp_gender.get()=='':
+                            emp_gender.set('Select')
                     else:
-                        cursor.execute(f"INSERT INTO EMP_DETAILS VALUES ({emp_id.get()},'{emp_name.get()}','{emp_desig.get()}',{int(emp_age.get())},'{emp_gender.get()}','{emp_email.get()}',{str(emp_dob.get())},{str(emp_doj.get())},'{emp_accno.get()}','{str(emp_contact.get())}','{emp_add.get()}');")
+                        #changing date format so that it can be uploaded to mysql database
+                        dob_str = entry7.get()
+                        dob_obj = datetime.strptime(dob_str, '%d/%m/%Y')
+                        dob = dob_obj.strftime('%Y-%m-%d')
+                        doj_str = entry8.get()
+                        doj_obj = datetime.strptime(doj_str, '%d/%m/%Y')
+                        doj = doj_obj.strftime('%Y-%m-%d')
+                        #=====================================================
+                        cursor.execute(f"INSERT INTO EMP_DETAILS VALUES ({emp_id.get()},'{emp_name.get()}','{emp_desig.get()}',{int(emp_age.get())},'{emp_gender.get()}','{emp_email.get()}','{dob}','{doj}','{emp_accno.get()}','{str(emp_contact.get())}','{emp_add.get()}');")
                         connection.commit()
                         messagebox.showinfo("Added :)","Employee Added Successfully...")
                         addemp()
