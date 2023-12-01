@@ -62,15 +62,15 @@ def adminmain():
     
     #=========================Button Active Function=========================================
     def activebtn(n: int):
-        btn1.config(bg='#f0f0f0')
-        btn2.config(bg='#f0f0f0')
-        btn3.config(bg='#f0f0f0')
-        btn4.config(bg='#f0f0f0')
-        btn5.config(bg='#f0f0f0')
-        btn6.config(bg='#f0f0f0')
-        btn7.config(bg='#f0f0f0')
-        btn8.config(bg='#f0f0f0')
-        btn9.config(bg='#f0f0f0')
+        btn1.config(bg='#E6DDC4')
+        btn2.config(bg='#E6DDC4')
+        btn3.config(bg='#E6DDC4')
+        btn4.config(bg='#E6DDC4')
+        btn5.config(bg='#E6DDC4')
+        btn6.config(bg='#E6DDC4')
+        btn7.config(bg='#E6DDC4')
+        btn8.config(bg='#E6DDC4')
+        btn9.config(bg='#E6DDC4')
         if n==1:
             btn1.config(bg='gold',fg='black')
         elif n==2:
@@ -190,8 +190,9 @@ def adminmain():
             except Exception as ex:
                 messagebox.showerror("Error",f"Error due to: {str(ex)}")
         #================================Buttons in Add Employee========================================================
-        button1 = Button(addemp_frame,text='Add Employee',command=saveemp,bg='#FF6000',fg='black',font=('helvetica',14),bd=3,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
-        button1.grid(row=6,column=0,columnspan=4)
+        button1 = Button(addemp_frame,text='Add Employee',command=saveemp,bg='#A6CF98',fg='black',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        button1.grid(row=6,column=0,columnspan=4,sticky=N,pady=5)
+        
 
     def btn2_fun():
         rightframe.destroy()
@@ -264,25 +265,25 @@ def adminmain():
     
     #======================Menu Buttons======================================================
     
-    btn1 = Button(left_frame, text = "Add Employee Record", font=('helvetica',10), height = 1, border = 0, command = addemp,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn1 = Button(left_frame, text = "Add Employee Record", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = addemp,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn1.grid(row = 1, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn2 = Button(left_frame, text = "Display Record of All Employees", font=('helvetica',10), height = 1, border = 0, command = btn2_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn2 = Button(left_frame, text = "Display Record of All Employees", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn2_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn2.grid(row = 2, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn3 = Button(left_frame, text = "Search Record for a Particular Employee", font=('helvetica',10), height = 1, border = 0, command = btn3_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn3 = Button(left_frame, text = "Search Record for a Particular Employee", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn3_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn3.grid(row = 3, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn4 = Button(left_frame, text = "Delete Records of all the Employees", font=('helvetica',10), height = 1, border = 0, command = btn4_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn4 = Button(left_frame, text = "Delete Records of all the Employees", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn4_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn4.grid(row = 4, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn5 = Button(left_frame, text = "Delete Record of a Particular Employee", font=('helvetica',10), height = 1, border = 0, command = btn5_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn5 = Button(left_frame, text = "Delete Record of a Particular Employee", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn5_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn5.grid(row = 5, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn6 = Button(left_frame, text = "Modify a Record", font=('helvetica',10), height = 1, border = 0, command = btn6_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn6 = Button(left_frame, text = "Modify a Record", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn6_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn6.grid(row = 6, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn7 = Button(left_frame, text = "Display Payroll", font=('helvetica',10), height = 1, border = 0, command = btn7_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn7 = Button(left_frame, text = "Display Payroll", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn7_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn7.grid(row = 7, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn8 = Button(left_frame, text = "Display Salary Slip of all Employees", font=('helvetica',10), height = 1, border = 0, command = btn8_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn8 = Button(left_frame, text = "Display Salary Slip of all Employees", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn8_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn8.grid(row = 8, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn9 = Button(left_frame, text = "Display Salary Slip of Particular Employee", font=('helvetica',10), height = 1, border = 0, command = btn9_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn9 = Button(left_frame, text = "Display Salary Slip of Particular Employee", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn9_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn9.grid(row = 9, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn10 = Button(left_frame, text = "Logout", font=('helvetica',10), height = 1, border = 0, command = logout,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn10 = Button(left_frame, text = "Logout", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = logout,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn10.grid(row = 10, column=0, sticky= E + W, padx = 20, pady = 2.5)
     
     
@@ -365,4 +366,4 @@ def login():
     root.mainloop() 
 
 
-login()
+adminmain()
