@@ -29,23 +29,23 @@ def adminmain():
     window.minsize(1200,640)
     window.resizable(False,False)
     window.iconbitmap("salary.ico")
-    window.configure(bg='black')
+    window.configure(bg='#41b3a3')
     #===============================================Header Frame========================================================
-    header_frame = Frame(window,bg='black', height=60, width = 1280)
+    header_frame = Frame(window,bg='#41b3a3', height=60, width = 1280)
     header_frame.place(x=0,y=0)
     header_image=PhotoImage(file='salary.png')
-    header_text=Label(header_frame,image=header_image,text='PAYROLL SYSTEM',font=('Adobe Garamond Pro',28,'bold'),compound=LEFT,fg='white',bg='black')
+    header_text=Label(header_frame,image=header_image,text='PAYROLL SYSTEM',font=('Adobe Garamond Pro',28,'bold'),compound=LEFT,fg='white',bg='#41b3a3')
     header_text.place(x=440,y=3)
     
     #=============================================Right Frame==============================================================
-    rightframe = Frame(window,bg='yellow')
+    rightframe = Frame(window,bg='white')
     rightframe.place(x=350,y=110,width=840,height=508)
     rightframe_header = Frame(window, border = 2,background='burlywood1',relief=SOLID)
     rightframe_header.place(x=350,y=60,width=840,height=50)
     label = Label(rightframe_header,font=('times',20),bg='burlywood1')
     label.pack(expand=True)
     #==========================================Menu Panel Frame==============================================
-    left_frame = Frame(window, bg='black')
+    left_frame = Frame(window, bg='#41b3a3')
     left_frame.columnconfigure(0, weight = 1)
     left_frame.rowconfigure(0, weight = 1)
     left_frame.rowconfigure(1, weight = 1)
@@ -190,13 +190,18 @@ def adminmain():
             except Exception as ex:
                 messagebox.showerror("Error",f"Error due to: {str(ex)}")
         #================================Buttons in Add Employee========================================================
-        button1 = Button(addemp_frame,text='Add Employee',command=saveemp,bg='#A6CF98',fg='black',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        def on_enter(e):
+            button1.config(bg='#01d449',fg='black')
+        def on_leave(e):
+            button1.config(bg='white',fg='#01d449')
+        button1 = Button(addemp_frame,text='Add Employee',command=saveemp,bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        button1.bind("<Enter>",on_enter)
+        button1.bind("<Leave>",on_leave)
         button1.grid(row=6,column=0,columnspan=4,sticky=N,pady=5)
-        
 
     def btn2_fun():
         rightframe.destroy()
-        btn2frame = Frame(window,bg='yellow')
+        btn2frame = Frame(window,bg='white')
         btn2frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Records of all Employee...')
         activebtn(2)
@@ -204,7 +209,7 @@ def adminmain():
 
     def btn3_fun():
         rightframe.destroy()
-        btn3frame = Frame(window,bg='yellow')
+        btn3frame = Frame(window,bg='white')
         btn3frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Search Record of a Particular Employee...')
         activebtn(3)
@@ -212,42 +217,42 @@ def adminmain():
 
     def btn4_fun():
         rightframe.destroy()
-        btn4frame = Frame(window,bg='yellow')
+        btn4frame = Frame(window,bg='white')
         btn4frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Delete Records of all Employees...')
         activebtn(4)
 
     def btn5_fun():
         rightframe.destroy()
-        btn5frame = Frame(window,bg='yellow')
+        btn5frame = Frame(window,bg='white')
         btn5frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Delete record of a Particular Employee...')
         activebtn(5)
 
     def btn6_fun():
         rightframe.destroy()
-        btn6frame = Frame(window,bg='yellow')
+        btn6frame = Frame(window,bg='white')
         btn6frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Modify a Record...')
         activebtn(6)
 
     def btn7_fun():
         rightframe.destroy()
-        btn7frame = Frame(window,bg='yellow')
+        btn7frame = Frame(window,bg='white')
         btn7frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Display Payroll...')
         activebtn(7)
 
     def btn8_fun():
         rightframe.destroy()
-        btn8frame = Frame(window,bg='yellow')
+        btn8frame = Frame(window,bg='white')
         btn8frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Salary Slip of all Employees...')
         activebtn(8)
     
     def btn9_fun():
         rightframe.destroy()
-        btn9frame = Frame(window,bg='yellow')
+        btn9frame = Frame(window,bg='white')
         btn9frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Salary Slip of a Particular Employee...')
         activebtn(9)
@@ -288,10 +293,10 @@ def adminmain():
     
     
     #=============================================Footer Frame=============================================================
-    footer_frame = Frame(window,bg='black',width=1200,height=25)
+    footer_frame = Frame(window,bg='#41b3a3',width=1200,height=25)
     footer_frame.place(x=0,y=615)
-    footer_text=Label(footer_frame,text='Developed by Aagman,Shivaansh, and Pranjal--Class 12th A',font=('helvetica',10,'bold'),fg='white',bg='black')
-    footer_text.place(x=435)
+    footer_text=Label(footer_frame,text='Developed by Aagman,Shivaansh, and Pranjal--Class 12th A',font=('helvetica',10,'bold'),fg='black',bg='#41b3a3')
+    footer_text.place(x=435,y=2)
     
     
     
