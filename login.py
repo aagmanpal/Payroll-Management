@@ -202,22 +202,21 @@ def adminmain():
             except Exception as ex:
                 messagebox.showerror("Error",f"Error due to: {str(ex)}")
         #================================Buttons in Add Employee========================================================
-        def on_enter(e):
+        
+        def on_enter_addemp(e):
             button1.config(bg='#01d449',fg='black')
-        def on_leave(e):
+        def on_leave_addemp(e):
             button1.config(bg='white',fg='#01d449')
         button1 = Button(addemp_frame,text='Add Employee',command=saveemp,bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
-        button1.bind("<Enter>",on_enter)
-        button1.bind("<Leave>",on_leave)
+        button1.bind("<Enter>",on_enter_addemp)
+        button1.bind("<Leave>",on_leave_addemp)
         button1.grid(row=6,column=0,columnspan=4,sticky=N,pady=5)
-
     def btn2_fun():
         rightframe.destroy()
         btn2frame = Frame(window,bg='white')
         btn2frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Records of all Employee...')
         activebtn(2)
-        
 
     def btn3_fun():
         rightframe.destroy()
@@ -277,8 +276,9 @@ def adminmain():
     leftframe_text = Label(left_frame, text = "Welcome Admin!!!", font=('Comic Sans MS',20), height = 1, border = 3,background='burlywood1',relief=RIDGE)
     leftframe_text.grid(row = 0, column=0, sticky= E + W, padx = 5, pady = 2.5)
     
+    #==========Button Animation on hovering=========
     
-                
+    
     
     #======================Menu Buttons======================================================
     
