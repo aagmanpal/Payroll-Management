@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from tkinter import ttk
 from tkcalendar import DateEntry
 import mysql.connector
 from datetime import datetime
@@ -217,6 +218,20 @@ def adminmain():
         btn2frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Records of all Employee...')
         activebtn(2)
+        tree = ttk.Treeview(btn2frame,columns=('id','name','desig','age','gender','email','dob','doj','accno','contact','add'),show='headings')
+        tree.pack(fill='both',expand=True)
+        tree.heading('id',text='Employee ID')
+        tree.heading('name',text='NAME')
+        tree.heading('desig',text='DESIGNATION')
+        tree.heading('age',text='AGE')
+        tree.heading('gender',text='GENDER')
+        tree.heading('email',text='EMAIL')
+        tree.heading('dob',text='D.O.B')
+        tree.heading('doj',text='D.O.J')
+        tree.heading('accno',text='ACCOUNT NO.')
+        tree.heading('contact',text='CONTACT NO.')
+        tree.heading('add',text='ADDRESS')
+        tree.insert(parent='',index=END,values=(1,'Aagman','Developer',17,'Male','aagmanpal@gmail.com','13/06/2006','01/12/2023','123456789','7843819008','sulem sarai prayagraj'))
 
     def btn3_fun():
         rightframe.destroy()
