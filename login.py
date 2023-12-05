@@ -218,19 +218,44 @@ def adminmain():
         btn2frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Records of all Employee...')
         activebtn(2)
-        tree = ttk.Treeview(btn2frame,columns=('id','name','desig','age','gender','email','dob','doj','accno','contact','add'),show='headings')
+        style=ttk.Style()
+        style.theme_use('clam')
+        tree = ttk.Treeview(btn2frame,columns=('id','name','desig','age','gender','email','dob','doj','accno','contact','add'),show='headings',height=10,)
         tree.pack(fill='both',expand=True)
+        tree.column('id',anchor='center')
         tree.heading('id',text='Employee ID')
+        tree.column('name',anchor='center')
         tree.heading('name',text='NAME')
+        tree.column('desig',anchor='center')
         tree.heading('desig',text='DESIGNATION')
+        tree.column('age',anchor='center')
         tree.heading('age',text='AGE')
+        tree.column('gender',anchor='center')
         tree.heading('gender',text='GENDER')
+        tree.column('email',anchor='center')
         tree.heading('email',text='EMAIL')
+        tree.column('dob',anchor='center')
         tree.heading('dob',text='D.O.B')
+        tree.column('doj',anchor='center')
         tree.heading('doj',text='D.O.J')
+        tree.column('accno',anchor='center')
         tree.heading('accno',text='ACCOUNT NO.')
+        tree.column('contact',anchor='center')
         tree.heading('contact',text='CONTACT NO.')
+        tree.column('add',anchor='center')
         tree.heading('add',text='ADDRESS')
+        style1 = ttk.Style()
+        style1.configure("Treeview.Scrollbar",
+                background="gray",
+                troughcolor="light gray",
+                gripcount=0,
+                gripcolor="white",
+                gripinset=2,
+                gripborderwidth=0,
+                thickness=10)
+        hor_scrollbar = ttk.Scrollbar(btn2frame,orient='horizontal',command=tree.xview)
+        tree.configure(xscrollcommand=hor_scrollbar.set)
+        hor_scrollbar.pack(side='bottom',fill='x')
         tree.insert(parent='',index=END,values=(1,'Aagman','Developer',17,'Male','aagmanpal@gmail.com','13/06/2006','01/12/2023','123456789','7843819008','sulem sarai prayagraj'))
 
     def btn3_fun():
