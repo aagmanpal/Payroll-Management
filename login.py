@@ -17,7 +17,7 @@ cursor.execute("INSERT INTO ADMIN_CREDENTIALS VALUES ('aagman','123'),('shivaans
 cursor.execute("Select * from admin_credentials;")
 admins = cursor.fetchall()
 #==========creating table for emp details===================
-cursor.execute("CREATE TABLE IF NOT EXISTS EMP_DETAILS (EMP_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,NAME VARCHAR(50) NOT NULL,DESIGNATION VARCHAR(30) NOT NULL,AGE INT NOT NULL,GENDER TEXT NOT NULL,EMAIL varchar(40) NOT NULL,DOB DATE NOT NULL,DOJ DATE NOT NULL,ACCOUNT_NO VARCHAR(15) NOT NULL,CONTACT_NO VARCHAR(14) NOT NULL,ADDRESS VARCHAR(50) NOT NULL);")
+cursor.execute("CREATE TABLE IF NOT EXISTS EMP_DETAILS (EMP_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,NAME VARCHAR(50) NOT NULL,DESIGNATION VARCHAR(30) NOT NULL,AGE INT NOT NULL,GENDER TEXT NOT NULL,EMAIL varchar(40) NOT NULL,DOB DATE NOT NULL,DOJ DATE NOT NULL,ACCOUNT_NO VARCHAR(15) NOT NULL,CONTACT_NO VARCHAR(14) NOT NULL,ADDRESS VARCHAR(50) NOT NULL, SAlARY INT);")
 
 
 #Functions Defining
@@ -196,7 +196,7 @@ def adminmain():
                         doj_obj = datetime.strptime(doj_str, '%d/%m/%Y')
                         doj = doj_obj.strftime('%Y-%m-%d')
                         #=====================================================
-                        cursor.execute(f"INSERT INTO EMP_DETAILS VALUES ({emp_id.get()},'{emp_name.get()}','{emp_desig.get()}',{int(emp_age.get())},'{emp_gender.get()}','{emp_email.get()}','{dob}','{doj}','{emp_accno.get()}','{str(emp_contact.get())}','{emp_add.get()}');")
+                        cursor.execute(f"INSERT INTO EMP_DETAILS VALUES ({emp_id.get()},'{emp_name.get()}','{emp_desig.get()}',{int(emp_age.get())},'{emp_gender.get()}','{emp_email.get()}','{dob}','{doj}','{emp_accno.get()}','{str(emp_contact.get())}','{emp_add.get()}',NULL);")
                         connection.commit()
                         messagebox.showinfo("Added :)","Employee Added Successfully...")
                         addemp()
@@ -256,7 +256,35 @@ def adminmain():
         hor_scrollbar = ttk.Scrollbar(btn2frame,orient='horizontal',command=tree.xview)
         tree.configure(xscrollcommand=hor_scrollbar.set)
         hor_scrollbar.pack(side='bottom',fill='x')
-        tree.insert(parent='',index=END,values=(1,'Aagman','Developer',17,'Male','aagmanpal@gmail.com','13/06/2006','01/12/2023','123456789','7843819008','sulem sarai prayagraj'))
+
+        tree.insert(parent='',index=END,values=(1,'Aagman','Developer',17,'Male','aagmanpal@gmail.com','13/06/2006','01/12/2023','123456789','7843819008','Sulem Sarai, Prayagraj'))
+        tree.insert(parent='',index=END,values=(2,'Shivaansh','Developer',17,'Male','kanchanshivaansh2006@gmail.com','02/01/2006','07/12/2023','987654321','8471064398','Nawab Yusuf Road, Prayagraj'))
+        
+        #Accessing database to get records of all employees.
+        cursor.execute("SELECT * FROM EMP_DETAILS;")
+        details = cursor.fetchall()
+
+        #Displaying records of all employees.
+        if len(details) != 0:
+            for i in range(0, len(details)):
+                lis = list(details[i])
+                date = ""
+                for j in str(lis[6]):
+                    if j == "-":
+                        date += "/"
+                    else:
+                        date += j
+                lis[6] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
+
+                date = ""
+                for j in str(lis[7]):
+                    if j == "-":
+                        date += "/"
+                    else:
+                        date += j
+                lis[7] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
+                tree.insert(parent='',index=END,values=lis)
+
 
     def btn3_fun():
         rightframe.destroy()
