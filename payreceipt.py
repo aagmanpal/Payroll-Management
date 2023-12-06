@@ -10,10 +10,10 @@ def payreceipt(empinfo, paygain, paydeduction, others):
     deduction = float(paydeduction[0]) + float(paydeduction[1]) + float(paydeduction[2]) + float(paydeduction[3]) + float(paydeduction[4])
     net_pay = gross_salary - deduction
 
-    img = Image.open("paysliptemp.png")
+    img = Image.open("assets/paysliptemp.png")
     i = ImageDraw.Draw(img)
 
-    font = ImageFont.truetype("Nunito-Regular.ttf", size = 50)
+    font = ImageFont.truetype("assets/Nunito-Regular.ttf", size = 50)
     
     #Empinfo
     i.text((223,405), f"{empinfo[0]}", fill = (0,0,0), font = font)
