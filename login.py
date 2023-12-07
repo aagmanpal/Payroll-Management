@@ -253,16 +253,6 @@ def adminmain():
         tree.column('add',anchor='center')
         tree.heading('add',text='ADDRESS')
         
-        style1 = ttk.Style()
-        style1.configure("Treeview.Scrollbar",
-                background="gray",
-                troughcolor="light gray",
-                gripcount=0,
-                gripcolor="white",
-                gripinset=2,
-                gripborderwidth=0,
-                thickness=10)
-        
         hor_scrollbar = ttk.Scrollbar(btn2frame,orient='horizontal',command=tree.xview)
         tree.configure(xscrollcommand=hor_scrollbar.set)
         hor_scrollbar.pack(side='bottom',fill='x')
@@ -424,7 +414,7 @@ def adminmain():
                     reclis[6] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
 
                     date = ""
-                    for i in str(reclis[7]):
+                    for j in str(reclis[7]):
                         if j == "-":
                             date += "/"
                         else:

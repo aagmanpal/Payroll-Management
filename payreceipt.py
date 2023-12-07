@@ -6,6 +6,7 @@ def payreceipt(empinfo, paygain, paydeduction, others):
     #paydeduction = [tax deduction, health insurance, loans, fines, others]
     #others = [payment mode, note]
     
+    
     gross_salary = float(paygain[0]) + float(paygain[1]) + float(paygain[2])
     deduction = float(paydeduction[0]) + float(paydeduction[1]) + float(paydeduction[2]) + float(paydeduction[3]) + float(paydeduction[4])
     net_pay = gross_salary - deduction
@@ -39,3 +40,4 @@ def payreceipt(empinfo, paygain, paydeduction, others):
     i.text((924,2095), f"{others[1]}", fill = (0,0,0), font = font)
 
     img.save("receipt.png")
+
