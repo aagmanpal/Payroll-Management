@@ -289,8 +289,8 @@ def adminmain():
 
     def particularemp_rec():
         rightframe.destroy()
-        btn3frame = Frame(window,bg='white')
-        btn3frame.place(x=350,y=110,width=840,height=508)
+        #btn3frame = Frame(window,bg='white')
+        #btn3frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Search Record of a Particular Employee...')
         activebtn(3)
 
@@ -438,12 +438,65 @@ def adminmain():
         activebtn(4)
         
 
-    def btn5_fun():
+    def delete_rec():
         rightframe.destroy()
         btn5frame = Frame(window,bg='white')
         btn5frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Delete record of a Particular Employee...')
         activebtn(5)
+
+        btn5frame.columnconfigure(0, weight = 1)
+        btn5frame.columnconfigure(1, weight = 1)
+        btn5frame.columnconfigure(2, weight = 1)
+        btn5frame.columnconfigure(3, weight = 1)
+
+        btn5frame.rowconfigure(0, weight = 1)
+        btn5frame.rowconfigure(1, weight = 1)
+        #Added extra rows and columns to adjust positioning.
+        btn5frame.rowconfigure(2, weight = 1)
+        btn5frame.rowconfigure(3, weight = 1)
+        btn5frame.rowconfigure(4, weight = 1)
+        btn5frame.rowconfigure(5, weight = 1)
+        btn5frame.rowconfigure(6, weight = 1)
+        btn5frame.place(x=350,y=110,width=840,height=508)
+
+        emp_id = StringVar()
+
+        text1 = Label(btn5frame,text='Employee ID:',font=('times new roman',16),bg='white')
+        text1.grid(column=0,row=0)
+
+        entry1 = Entry(btn5frame, textvariable=emp_id ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry1.grid(column=1,row=0)
+
+        def on_enter_showrecemp(e):
+            delete_btn.config(bg='#01d449',fg='black')
+            
+        def on_leave_showrecemp(e):
+            delete_btn.config(bg='white',fg='#01d449')
+
+        def delete_emp():
+            empid = emp_id.get()
+
+            if empid == "":
+                messagebox.showerror("Error","Please enter an Employee ID.")
+            elif empid.isnumeric() == False:
+                messagebox.showerror("Error","Please enter a valid Employee ID.")
+            else:
+                cursor.execute(f"SELECT * FROM EMP_DETAILS WHERE EMP_ID = {empid};") 
+                rec = cursor.fetchone()
+
+                if rec == (None):
+                    messagebox.showerror("Error",f"No employee with ID {empid} exists.")
+                else:
+                    cursor.execute(f"DELETE FROM EMP_DETAILS WHERE EMP_ID = {empid};")
+                    messagebox.showinfo("Deleted", "Employee record successfully deleted.")
+                    connection.commit()
+                    delete_rec()
+
+        delete_btn = Button(btn5frame,text='Delete Record',command = delete_emp, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        delete_btn.bind("<Enter>",on_enter_showrecemp)
+        delete_btn.bind("<Leave>",on_leave_showrecemp)
+        delete_btn.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
 
     def btn6_fun():
         rightframe.destroy()
@@ -495,7 +548,7 @@ def adminmain():
     btn3.grid(row = 3, column=0, sticky= E + W, padx = 20, pady = 2.5)
     btn4 = Button(left_frame, text = "Delete Records of all the Employees", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn4_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn4.grid(row = 4, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn5 = Button(left_frame, text = "Delete Record of a Particular Employee", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn5_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn5 = Button(left_frame, text = "Delete Record of a Particular Employee", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = delete_rec,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn5.grid(row = 5, column=0, sticky= E + W, padx = 20, pady = 2.5)
     btn6 = Button(left_frame, text = "Modify a Record", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn6_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn6.grid(row = 6, column=0, sticky= E + W, padx = 20, pady = 2.5)
@@ -586,6 +639,5 @@ def login():
     loginbutton.grid(row=3,column=1,pady=40)
     
     root.mainloop() 
-
 
 adminmain()
