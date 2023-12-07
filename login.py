@@ -5,7 +5,7 @@ from tkcalendar import DateEntry
 import mysql.connector
 from datetime import datetime
 #=========Establishing a connection in Mysql==============
-connection = mysql.connector.connect(host='localhost',user='root',passwd='123')
+connection = mysql.connector.connect(host='localhost',user='root',passwd='manusql')
 cursor = connection.cursor()
 cursor.execute('CREATE DATABASE IF NOT EXISTS PMS;')
 cursor.execute('USE PMS;')
@@ -206,22 +206,30 @@ def adminmain():
         
         def on_enter_addemp(e):
             button1.config(bg='#01d449',fg='black')
+
         def on_leave_addemp(e):
             button1.config(bg='white',fg='#01d449')
+
         button1 = Button(addemp_frame,text='Add Employee',command=saveemp,bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
         button1.bind("<Enter>",on_enter_addemp)
         button1.bind("<Leave>",on_leave_addemp)
         button1.grid(row=6,column=0,columnspan=4,sticky=N,pady=5)
-    def btn2_fun():
+
+    def allemp_rec():
         rightframe.destroy()
+
         btn2frame = Frame(window,bg='white')
         btn2frame.place(x=350,y=110,width=840,height=508)
+
         label.config(text='Records of all Employee...')
         activebtn(2)
+
         style=ttk.Style()
         style.theme_use('clam')
+
         tree = ttk.Treeview(btn2frame,columns=('id','name','desig','age','gender','email','dob','doj','accno','contact','add'),show='headings',height=10,)
         tree.pack(fill='both',expand=True)
+
         tree.column('id',anchor='center')
         tree.heading('id',text='Employee ID')
         tree.column('name',anchor='center')
@@ -244,6 +252,7 @@ def adminmain():
         tree.heading('contact',text='CONTACT NO.')
         tree.column('add',anchor='center')
         tree.heading('add',text='ADDRESS')
+        
         style1 = ttk.Style()
         style1.configure("Treeview.Scrollbar",
                 background="gray",
@@ -253,10 +262,12 @@ def adminmain():
                 gripinset=2,
                 gripborderwidth=0,
                 thickness=10)
+        
         hor_scrollbar = ttk.Scrollbar(btn2frame,orient='horizontal',command=tree.xview)
         tree.configure(xscrollcommand=hor_scrollbar.set)
         hor_scrollbar.pack(side='bottom',fill='x')
 
+        #Pre-defined emp rec(not in database).
         tree.insert(parent='',index=END,values=(1,'Aagman','Developer',17,'Male','aagmanpal@gmail.com','13/06/2006','01/12/2023','123456789','7843819008','Sulem Sarai, Prayagraj'))
         tree.insert(parent='',index=END,values=(2,'Shivaansh','Developer',17,'Male','kanchanshivaansh2006@gmail.com','02/01/2006','07/12/2023','987654321','8471064398','Nawab Yusuf Road, Prayagraj'))
         
@@ -286,12 +297,149 @@ def adminmain():
                 tree.insert(parent='',index=END,values=lis)
 
 
-    def btn3_fun():
+    def particularemp_rec():
         rightframe.destroy()
         btn3frame = Frame(window,bg='white')
         btn3frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Search Record of a Particular Employee...')
         activebtn(3)
+
+        rec_frame = Frame(window,bg='white')
+        rec_frame.columnconfigure(0, weight = 1)
+        rec_frame.columnconfigure(1, weight = 1)
+        rec_frame.columnconfigure(2, weight = 1)
+        rec_frame.columnconfigure(3, weight = 1)
+
+        rec_frame.rowconfigure(0, weight = 1)
+        rec_frame.rowconfigure(1, weight = 1)
+        #Added extra rows and columns to adjust positioning.
+        rec_frame.rowconfigure(2, weight = 1)
+        rec_frame.rowconfigure(3, weight = 1)
+        rec_frame.rowconfigure(4, weight = 1)
+        rec_frame.rowconfigure(5, weight = 1)
+        rec_frame.rowconfigure(6, weight = 1)
+        rec_frame.place(x=350,y=110,width=840,height=508)
+
+        emp_id = StringVar()
+
+        text1 = Label(rec_frame,text='Employee ID:',font=('times new roman',16),bg='white')
+        text1.grid(column=0,row=0)
+
+        entry1 = Entry(rec_frame, textvariable=emp_id ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry1.grid(column=1,row=0)
+
+        def on_enter_showrecemp(e):
+            button2.config(bg='#01d449',fg='black')
+            
+        def on_leave_showrecemp(e):
+            button2.config(bg='white',fg='#01d449')
+
+        def locate_emp():
+            empid = emp_id.get()
+
+            if empid == "":
+                messagebox.showerror("Error","Please enter an Employee ID.")
+            elif empid.isnumeric() == False:
+                messagebox.showerror("Error","Please enter a valid Employee ID.")
+            else:
+                cursor.execute(f"SELECT * FROM EMP_DETAILS WHERE EMP_ID = {empid};") 
+                rec = cursor.fetchone()
+
+                if rec == (None):
+                    messagebox.showerror("Error",f"No employee with ID {empid} exists.")
+                    particularemp_rec()
+                else:
+                    reclis = list(rec) 
+
+                    #Destroyed old objects.
+                    text1.destroy()
+                    entry1.destroy()
+                    button2.destroy()
+
+                    btn3frame = Frame(window,bg='white')
+                    btn3frame.place(x=350,y=110,width=840,height=50)
+                    btn3frame.columnconfigure((0,1,2,3), weight=1)
+                    btn3frame.rowconfigure((0,1,2,3,4,5,6), weight = 1)
+
+                    def on_enter_showrecemp2(e):
+                        back_btn.config(bg='#01d449',fg='black')
+            
+                    def on_leave_showrecemp2(e):
+                        back_btn.config(bg='white',fg='#01d449')
+
+                    back_btn = Button(rec_frame,text='Back',command = particularemp_rec, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+                    back_btn.bind("<Enter>",on_enter_showrecemp2)
+                    back_btn.bind("<Leave>",on_leave_showrecemp2)
+                    back_btn.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
+
+
+                    style=ttk.Style()
+                    style.theme_use('clam')
+
+                    tree = ttk.Treeview(btn3frame,columns=('id','name','desig','age','gender','email','dob','doj','accno','contact','add'),show='headings',height=10,)
+                    tree.pack(fill='both',expand=True)
+
+                    tree.column('id',anchor='center')
+                    tree.heading('id',text='Employee ID')
+                    tree.column('name',anchor='center')
+                    tree.heading('name',text='NAME')
+                    tree.column('desig',anchor='center')
+                    tree.heading('desig',text='DESIGNATION')
+                    tree.column('age',anchor='center')
+                    tree.heading('age',text='AGE')
+                    tree.column('gender',anchor='center')
+                    tree.heading('gender',text='GENDER')
+                    tree.column('email',anchor='center')
+                    tree.heading('email',text='EMAIL')
+                    tree.column('dob',anchor='center')
+                    tree.heading('dob',text='D.O.B')
+                    tree.column('doj',anchor='center')
+                    tree.heading('doj',text='D.O.J')
+                    tree.column('accno',anchor='center')
+                    tree.heading('accno',text='ACCOUNT NO.')
+                    tree.column('contact',anchor='center')
+                    tree.heading('contact',text='CONTACT NO.')
+                    tree.column('add',anchor='center')
+                    tree.heading('add',text='ADDRESS')
+                    
+                    style1 = ttk.Style()
+                    style1.configure("Treeview.Scrollbar",
+                            background="gray",
+                            troughcolor="light gray",
+                            gripcount=0,
+                            gripcolor="white",
+                            gripinset=2,
+                            gripborderwidth=0,
+                            thickness=10)
+                    
+                    hor_scrollbar = ttk.Scrollbar(btn3frame,orient='horizontal',command=tree.xview)
+                    tree.configure(xscrollcommand=hor_scrollbar.set)
+                    hor_scrollbar.pack(side='bottom',fill='x')
+
+                    #Changing date format.
+                    date = ""
+                    for j in str(reclis[6]):
+                        if j == "-":
+                            date += "/"
+                        else:
+                            date += j
+                    reclis[6] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
+
+                    date = ""
+                    for i in str(reclis[7]):
+                        if j == "-":
+                            date += "/"
+                        else:
+                            date += j
+                    reclis[7] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
+                    tree.insert(parent='',index=END,values=reclis)
+
+        button2 = Button(rec_frame,text='Show Record',command = locate_emp, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        button2.bind("<Enter>",on_enter_showrecemp)
+        button2.bind("<Leave>",on_leave_showrecemp)
+        button2.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
+
+        
         
 
     def btn4_fun():
@@ -300,6 +448,7 @@ def adminmain():
         btn4frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Delete Records of all Employees...')
         activebtn(4)
+        
 
     def btn5_fun():
         rightframe.destroy()
@@ -352,9 +501,9 @@ def adminmain():
     
     btn1 = Button(left_frame, text = "Add Employee Record", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = addemp,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn1.grid(row = 1, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn2 = Button(left_frame, text = "Display Record of All Employees", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn2_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn2 = Button(left_frame, text = "Display Record of All Employees", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = allemp_rec,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn2.grid(row = 2, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn3 = Button(left_frame, text = "Search Record for a Particular Employee", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn3_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn3 = Button(left_frame, text = "Search Record for a Particular Employee", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = particularemp_rec,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn3.grid(row = 3, column=0, sticky= E + W, padx = 20, pady = 2.5)
     btn4 = Button(left_frame, text = "Delete Records of all the Employees", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn4_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn4.grid(row = 4, column=0, sticky= E + W, padx = 20, pady = 2.5)
