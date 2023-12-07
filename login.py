@@ -499,7 +499,7 @@ def adminmain():
                     messagebox.showerror("Error",f"No employee with ID {empid} exists.")
                 else:
                     cursor.execute(f"DELETE FROM EMP_DETAILS WHERE EMP_ID = {empid};")
-                    messagebox.showinfo("Deleted", "Employee record successfully deleted.")
+                    messagebox.showinfo("Deleted", f"Employee record successfully deleted.\nEmployee ID:{rec[0]}\nEmployee Name:{rec[1]}")
                     connection.commit()
                     delete_rec()
 
