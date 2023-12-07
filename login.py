@@ -17,7 +17,7 @@ cursor.execute("INSERT INTO ADMIN_CREDENTIALS VALUES ('aagman','123'),('shivaans
 cursor.execute("Select * from admin_credentials;")
 admins = cursor.fetchall()
 #==========creating table for emp details===================
-cursor.execute("CREATE TABLE IF NOT EXISTS EMP_DETAILS (EMP_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,NAME VARCHAR(50) NOT NULL,DESIGNATION VARCHAR(30) NOT NULL,AGE INT NOT NULL,GENDER TEXT NOT NULL,EMAIL varchar(40) NOT NULL,DOB DATE NOT NULL,DOJ DATE NOT NULL,ACCOUNT_NO VARCHAR(15) NOT NULL,CONTACT_NO VARCHAR(14) NOT NULL,ADDRESS VARCHAR(50) NOT NULL, SAlARY INT);")
+cursor.execute("CREATE TABLE IF NOT EXISTS EMP_DETAILS (EMP_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,NAME VARCHAR(50) NOT NULL,DESIGNATION VARCHAR(30) NOT NULL,SALARY INT NOT NULL, AGE INT NOT NULL,GENDER TEXT NOT NULL,EMAIL varchar(40) NOT NULL,DOB DATE NOT NULL,DOJ DATE NOT NULL,ACCOUNT_NO VARCHAR(15) NOT NULL,CONTACT_NO VARCHAR(14) NOT NULL,ADDRESS VARCHAR(50) NOT NULL);")
 
 
 #Functions Defining
@@ -109,11 +109,13 @@ def adminmain():
         addemp_frame.rowconfigure(4, weight = 1)
         addemp_frame.rowconfigure(5, weight = 1)
         addemp_frame.rowconfigure(6, weight = 1)
+        addemp_frame.rowconfigure(7, weight = 1)
         addemp_frame.place(x=350,y=110,width=840,height=508)
         #==========================Employee Details Variable========================================================
         emp_id = StringVar()
         emp_name = StringVar()
         emp_desig = StringVar()
+        emp_salary = StringVar()
         emp_age = StringVar()
         emp_gender = StringVar()
         emp_gender.set('Select')
@@ -130,22 +132,24 @@ def adminmain():
         text2.grid(column=0,row=1)
         text3 = Label(addemp_frame,text='Designation:',font=('times new roman',16),bg='white')
         text3.grid(column=0,row=2)
-        text4 = Label(addemp_frame,text='Age:',font=('times new roman',16),bg='white')
+        text4 = Label(addemp_frame,text='Salary:',font=('times new roman',16),bg='white')
         text4.grid(column=0,row=3)
-        text5 = Label(addemp_frame,text='Gender:',font=('times new roman',16),bg='white')
+        text5 = Label(addemp_frame,text='Age:',font=('times new roman',16),bg='white')
         text5.grid(column=0,row=4)
-        text6 = Label(addemp_frame,text='Email:',font=('times new roman',16),bg='white')
-        text6.grid(column=2,row=0)
-        text7 = Label(addemp_frame,text='D.O.B:',font=('times new roman',16),bg='white')
-        text7.grid(column=2,row=1)
-        text8 = Label(addemp_frame,text='D.O.J:',font=('times new roman',16),bg='white')
-        text8.grid(column=2,row=2)
-        text9 = Label(addemp_frame,text='Acc No.:',font=('times new roman',16),bg='white')
-        text9.grid(column=2,row=3)
-        text10 = Label(addemp_frame,text='Contact No.:',font=('times new roman',16),bg='white')
-        text10.grid(column=2,row=4)
-        text11 = Label(addemp_frame,text='Address:',font=('times new roman',16),bg='white')
-        text11.grid(column=0,row=5)
+        text6 = Label(addemp_frame,text='Gender:',font=('times new roman',16),bg='white')
+        text6.grid(column=0,row=5)
+        text7 = Label(addemp_frame,text='Email:',font=('times new roman',16),bg='white')
+        text7.grid(column=2,row=0)
+        text8 = Label(addemp_frame,text='D.O.B:',font=('times new roman',16),bg='white')
+        text8.grid(column=2,row=1)
+        text9 = Label(addemp_frame,text='D.O.J:',font=('times new roman',16),bg='white')
+        text9.grid(column=2,row=2)
+        text10 = Label(addemp_frame,text='Acc No.:',font=('times new roman',16),bg='white')
+        text10.grid(column=2,row=3)
+        text11 = Label(addemp_frame,text='Contact No.:',font=('times new roman',16),bg='white')
+        text11.grid(column=2,row=4)
+        text12 = Label(addemp_frame,text='Address:',font=('times new roman',16),bg='white')
+        text12.grid(column=0,row=6)
         #==============================Respective Entry Fields=======================================================
         entry1 = Entry(addemp_frame, textvariable=emp_id ,bg='lightyellow',bd=3,font=('Times new roman',16))
         entry1.grid(column=1,row=0)
@@ -153,24 +157,26 @@ def adminmain():
         entry2.grid(column=1,row=1)
         entry3 = Entry(addemp_frame, textvariable=emp_desig ,bg='lightyellow',bd=3,font=('Times new roman',16))
         entry3.grid(column=1,row=2)
-        entry4 = Entry(addemp_frame, textvariable=emp_age ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry4 = Entry(addemp_frame, textvariable=emp_salary ,bg='lightyellow',bd=3,font=('Times new roman',16))
         entry4.grid(column=1,row=3)
-        entry5 = OptionMenu(addemp_frame, emp_gender ,'Male','Female')
-        entry5.config(bg='lightyellow')
-        entry5['menu'].config(bg='lightyellow')
-        entry5.grid(column=1,row=4,sticky= E + W,padx=10)
-        entry6 = Entry(addemp_frame, textvariable=emp_email ,bg='lightyellow',bd=3,font=('Times new roman',16))
-        entry6.grid(column=3,row=0)
-        entry7 = DateEntry(addemp_frame, textvariable=emp_dob ,bg='lightyellow',bd=3,font=('Times new roman',16),date_pattern='dd/MM/yyyy')
-        entry7.grid(column=3,row=1)
-        entry8 = DateEntry(addemp_frame, textvariable=emp_doj ,bg='lightyellow',bd=3,font=('Times new roman',16),date_pattern='dd/MM/yyyy')
-        entry8.grid(column=3,row=2)
-        entry9 = Entry(addemp_frame, textvariable=emp_accno ,bg='lightyellow',bd=3,font=('Times new roman',16))
-        entry9.grid(column=3,row=3)
-        entry10 = Entry(addemp_frame, textvariable=emp_contact ,bg='lightyellow',bd=3,font=('Times new roman',16))
-        entry10.grid(column=3,row=4)
-        entry11 = Entry(addemp_frame, textvariable=emp_add ,bg='lightyellow',bd=3,font=('Times new roman',16))
-        entry11.grid(column=1,row=5,columnspan=3,sticky= E + W,padx=10)
+        entry5 = Entry(addemp_frame, textvariable=emp_age ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry5.grid(column=1,row=4)
+        entry6 = OptionMenu(addemp_frame, emp_gender ,'Male','Female')
+        entry6.config(bg='lightyellow')
+        entry6['menu'].config(bg='lightyellow')
+        entry6.grid(column=1,row=5,sticky= E + W,padx=10)
+        entry7 = Entry(addemp_frame, textvariable=emp_email ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry7.grid(column=3,row=0)
+        entry8 = DateEntry(addemp_frame, textvariable=emp_dob ,bg='lightyellow',bd=3,font=('Times new roman',16),date_pattern='dd/MM/yyyy')
+        entry8.grid(column=3,row=1)
+        entry9 = DateEntry(addemp_frame, textvariable=emp_doj ,bg='lightyellow',bd=3,font=('Times new roman',16),date_pattern='dd/MM/yyyy')
+        entry9.grid(column=3,row=2)
+        entry10 = Entry(addemp_frame, textvariable=emp_accno ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry10.grid(column=3,row=3)
+        entry11 = Entry(addemp_frame, textvariable=emp_contact ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry11.grid(column=3,row=4)
+        entry12 = Entry(addemp_frame, textvariable=emp_add ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry12.grid(column=1,row=6,columnspan=3,sticky= E + W,padx=10)
         #=====================Add Employee Button Function============================
         def saveemp():
             try:
@@ -183,20 +189,20 @@ def adminmain():
                         emp_gender.set('')
                     if row!=None:
                         messagebox.showerror("Error",f"This Employee ID is already in Record!\nEmployee Name:{row[1]}")
-                    elif (emp_id.get()=='') or (emp_name.get()=='') or (emp_desig.get()=='') or (emp_age.get()=='') or (emp_gender.get()=='') or (emp_email.get()=='') or (emp_dob.get()=='') or (emp_doj.get()=='') or (emp_accno.get()=='') or (emp_contact.get()=='') or (emp_add.get()==''):
+                    elif (emp_id.get()=='') or (emp_name.get()=='') or (emp_desig.get()=='') or (emp_salary.get()=='') or (emp_age.get()=='') or (emp_gender.get()=='') or (emp_email.get()=='') or (emp_dob.get()=='') or (emp_doj.get()=='') or (emp_accno.get()=='') or (emp_contact.get()=='') or (emp_add.get()==''):
                         messagebox.showerror("Empty Field","Please fill all the details first and then click on add employee button!")
                         if emp_gender.get()=='':
                             emp_gender.set('Select')
                     else:
                         #changing date format so that it can be uploaded to mysql database
-                        dob_str = entry7.get()
+                        dob_str = entry8.get()
                         dob_obj = datetime.strptime(dob_str, '%d/%m/%Y')
                         dob = dob_obj.strftime('%Y-%m-%d')
-                        doj_str = entry8.get()
+                        doj_str = entry9.get()
                         doj_obj = datetime.strptime(doj_str, '%d/%m/%Y')
                         doj = doj_obj.strftime('%Y-%m-%d')
                         #=====================================================
-                        cursor.execute(f"INSERT INTO EMP_DETAILS VALUES ({emp_id.get()},'{emp_name.get()}','{emp_desig.get()}',{int(emp_age.get())},'{emp_gender.get()}','{emp_email.get()}','{dob}','{doj}','{emp_accno.get()}','{str(emp_contact.get())}','{emp_add.get()}',NULL);")
+                        cursor.execute(f"INSERT INTO EMP_DETAILS VALUES ({emp_id.get()},'{emp_name.get()}','{emp_desig.get()}',{int(emp_salary.get())},{int(emp_age.get())},'{emp_gender.get()}','{emp_email.get()}','{dob}','{doj}','{emp_accno.get()}','{str(emp_contact.get())}','{emp_add.get()}');")
                         connection.commit()
                         messagebox.showinfo("Added :)","Employee Added Successfully...")
                         addemp()
@@ -213,7 +219,7 @@ def adminmain():
         button1 = Button(addemp_frame,text='Add Employee',command=saveemp,bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
         button1.bind("<Enter>",on_enter_addemp)
         button1.bind("<Leave>",on_leave_addemp)
-        button1.grid(row=6,column=0,columnspan=4,sticky=N,pady=5)
+        button1.grid(row=7,column=0,columnspan=4,sticky=N,pady=5)
 
     def allemp_rec():
         rightframe.destroy()
@@ -227,7 +233,7 @@ def adminmain():
         style=ttk.Style()
         style.theme_use('clam')
 
-        tree = ttk.Treeview(btn2frame,columns=('id','name','desig','age','gender','email','dob','doj','accno','contact','add'),show='headings',height=10,)
+        tree = ttk.Treeview(btn2frame,columns=('id','name','desig','salary','age','gender','email','dob','doj','accno','contact','add'),show='headings',height=10,)
         tree.pack(fill='both',expand=True)
 
         tree.column('id',anchor='center')
@@ -236,6 +242,8 @@ def adminmain():
         tree.heading('name',text='NAME')
         tree.column('desig',anchor='center')
         tree.heading('desig',text='DESIGNATION')
+        tree.column('salary',anchor='center')
+        tree.heading('salary',text='SALARY')
         tree.column('age',anchor='center')
         tree.heading('age',text='AGE')
         tree.column('gender',anchor='center')
@@ -258,8 +266,8 @@ def adminmain():
         hor_scrollbar.pack(side='bottom',fill='x')
 
         #Pre-defined emp rec(not in database).
-        tree.insert(parent='',index=END,values=(1,'Aagman','Developer',17,'Male','aagmanpal@gmail.com','13/06/2006','01/12/2023','123456789','7843819008','Sulem Sarai, Prayagraj'))
-        tree.insert(parent='',index=END,values=(2,'Shivaansh','Developer',17,'Male','kanchanshivaansh2006@gmail.com','02/01/2006','07/12/2023','987654321','8471064398','Nawab Yusuf Road, Prayagraj'))
+        tree.insert(parent='',index=END,values=(1,'Aagman','Developer',80000,17,'Male','aagmanpal@gmail.com','13/06/2006','01/12/2023','123456789','7843819008','Sulem Sarai, Prayagraj'))
+        tree.insert(parent='',index=END,values=(2,'Shivaansh','Developer',80000,17,'Male','kanchanshivaansh2006@gmail.com','02/01/2006','07/12/2023','987654321','8471064398','Nawab Yusuf Road, Prayagraj'))
         
         #Accessing database to get records of all employees.
         cursor.execute("SELECT * FROM EMP_DETAILS;")
@@ -270,20 +278,20 @@ def adminmain():
             for i in range(0, len(details)):
                 lis = list(details[i])
                 date = ""
-                for j in str(lis[6]):
-                    if j == "-":
-                        date += "/"
-                    else:
-                        date += j
-                lis[6] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
-
-                date = ""
                 for j in str(lis[7]):
                     if j == "-":
                         date += "/"
                     else:
                         date += j
                 lis[7] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
+
+                date = ""
+                for j in str(lis[8]):
+                    if j == "-":
+                        date += "/"
+                    else:
+                        date += j
+                lis[8] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
                 tree.insert(parent='',index=END,values=lis)
 
 
@@ -364,7 +372,7 @@ def adminmain():
                     style=ttk.Style()
                     style.theme_use('clam')
 
-                    tree = ttk.Treeview(btn3frame,columns=('id','name','desig','age','gender','email','dob','doj','accno','contact','add'),show='headings',height=10,)
+                    tree = ttk.Treeview(btn3frame,columns=('id','name','desig','salary','age','gender','email','dob','doj','accno','contact','add'),show='headings',height=10,)
                     tree.pack(fill='both',expand=True)
 
                     tree.column('id',anchor='center')
@@ -373,6 +381,8 @@ def adminmain():
                     tree.heading('name',text='NAME')
                     tree.column('desig',anchor='center')
                     tree.heading('desig',text='DESIGNATION')
+                    tree.column('salary',anchor='center')
+                    tree.heading('salary',text='SALARY')
                     tree.column('age',anchor='center')
                     tree.heading('age',text='AGE')
                     tree.column('gender',anchor='center')
@@ -406,20 +416,20 @@ def adminmain():
 
                     #Changing date format.
                     date = ""
-                    for j in str(reclis[6]):
-                        if j == "-":
-                            date += "/"
-                        else:
-                            date += j
-                    reclis[6] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
-
-                    date = ""
                     for j in str(reclis[7]):
                         if j == "-":
                             date += "/"
                         else:
                             date += j
                     reclis[7] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
+
+                    date = ""
+                    for j in str(reclis[8]):
+                        if j == "-":
+                            date += "/"
+                        else:
+                            date += j
+                    reclis[8] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
                     tree.insert(parent='',index=END,values=reclis)
 
         button2 = Button(rec_frame,text='Show Record',command = locate_emp, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
