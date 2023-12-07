@@ -5,7 +5,7 @@ from tkcalendar import DateEntry
 import mysql.connector
 from datetime import datetime
 #=========Establishing a connection in Mysql==============
-connection = mysql.connector.connect(host='localhost',user='root',passwd='manusql')
+connection = mysql.connector.connect(host='localhost',user='root',passwd='123')
 cursor = connection.cursor()
 cursor.execute('CREATE DATABASE IF NOT EXISTS PMS;')
 cursor.execute('USE PMS;')
