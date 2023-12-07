@@ -357,9 +357,7 @@ def adminmain():
                     button2.destroy()
 
                     btn3frame = Frame(window,bg='white')
-                    btn3frame.place(x=350,y=110,width=840,height=50)
-                    btn3frame.columnconfigure((0,1,2,3), weight=1)
-                    btn3frame.rowconfigure((0,1,2,3,4,5,6), weight = 1)
+                    btn3frame.place(x=350,y=110,width=840,height=250)
 
                     def on_enter_showrecemp2(e):
                         back_btn.config(bg='#01d449',fg='black')
@@ -370,7 +368,7 @@ def adminmain():
                     back_btn = Button(rec_frame,text='Back',command = particularemp_rec, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
                     back_btn.bind("<Enter>",on_enter_showrecemp2)
                     back_btn.bind("<Leave>",on_leave_showrecemp2)
-                    back_btn.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
+                    back_btn.grid(row=4,column=0,columnspan=4,sticky=N,pady=5)
 
 
                     style=ttk.Style()
@@ -414,7 +412,7 @@ def adminmain():
                     
                     hor_scrollbar = ttk.Scrollbar(btn3frame,orient='horizontal',command=tree.xview)
                     tree.configure(xscrollcommand=hor_scrollbar.set)
-                    hor_scrollbar.pack(side='bottom',fill='x')
+                    hor_scrollbar.pack(side="bottom",fill='x')
 
                     #Changing date format.
                     date = ""
