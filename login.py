@@ -451,7 +451,6 @@ def adminmain():
     def delete_rec():
         rightframe.destroy()
         btn5frame = Frame(window,bg='white')
-        btn5frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Delete record of a Particular Employee...')
         activebtn(5)
 
@@ -510,11 +509,49 @@ def adminmain():
 
     def btn6_fun():
         rightframe.destroy()
-        btn6frame = Frame(window,bg='white')
+        btn6frame = Frame(window,bg='#F9E8D9')
         btn6frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Modify a Record...')
         activebtn(6)
-
+        search_frame = Frame(btn6frame,bg='#F9E8D9',width=840,height=100)
+        search_frame.columnconfigure(0)
+        search_frame.columnconfigure(1)
+        search_frame.columnconfigure(2)
+        search_frame.columnconfigure(3)
+        search_frame.rowconfigure(0)
+        search_frame.rowconfigure(1)
+        search_frame.rowconfigure(2)
+        search_frame.pack()
+        emp_id = StringVar()
+        emp_name = StringVar()
+        text1 = Label(search_frame,text='Employee ID:',font=('times new roman',16),bg='#F9E8D9')
+        text1.grid(column=0,row=0,pady=15,padx=14)
+        text2 = Label(search_frame,text='Employee Name:',font=('times new roman',16),bg='#F9E8D9')
+        text2.grid(column=2,row=0,pady=15,padx=15)
+        entry1 = Entry(search_frame, textvariable=emp_id ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry1.grid(column=1,row=0,pady=15,padx=14)
+        entry2 = Entry(search_frame, textvariable=emp_name ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry2.grid(column=3,row=0,pady=15,padx=14)
+        def on_enter_search(e):
+            search_btn.config(bg='#01d449',fg='black')
+            
+        def on_leave_search(e):
+            search_btn.config(bg='#F9E8D9',fg='#01d449')
+        search_btn = Button(search_frame,text='Search',command = None, bg='#F9E8D9',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        search_btn.bind("<Enter>",on_enter_search)
+        search_btn.bind("<Leave>",on_leave_search)
+        search_btn.grid(row=1,column=1,columnspan=2,sticky=N,pady=8)
+        def on_enter_browse(e):
+            browse_btn.config(bg='#01d449',fg='black')
+            
+        def on_leave_browse(e):
+            browse_btn.config(bg='#F9E8D9',fg='#01d449')
+        browse_btn = Button(search_frame,text='Browse All Employee',command = None, bg='#F9E8D9',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        browse_btn.bind("<Enter>",on_enter_browse)
+        browse_btn.bind("<Leave>",on_leave_browse)
+        browse_btn.grid(row=2,column=1,columnspan=2,sticky=N,pady=8)
+        
+        
     def btn7_fun():
         rightframe.destroy()
         btn7frame = Frame(window,bg='white')
