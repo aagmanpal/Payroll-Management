@@ -5,7 +5,7 @@ from tkcalendar import DateEntry
 import mysql.connector
 from datetime import datetime
 #=========Establishing a connection in Mysql==============
-connection = mysql.connector.connect(host='localhost',user='root',passwd='manusql')
+connection = mysql.connector.connect(host='localhost',user='root',passwd='123')
 cursor = connection.cursor()
 cursor.execute('CREATE DATABASE IF NOT EXISTS PMS;')
 cursor.execute('USE PMS;')
@@ -524,7 +524,7 @@ def adminmain():
 
         emp_id1 = StringVar()
 
-        text = Label(btn6frame,text='Employee ID:',font=('times new roman',16),bg='white')
+        text = Label(btn6frame,text='Employee ID:',font=('times new roman',16),bg='#F9E8D9')
         text.grid(column=0,row=0)
 
         entry = Entry(btn6frame, textvariable=emp_id1 ,bg='lightyellow',bd=3,font=('Times new roman',16))
@@ -550,42 +550,56 @@ def adminmain():
                     check_btn.destroy()
 
                     emp_id = StringVar()
+                    emp_id.set(f"{rec[0]}")
                     emp_name = StringVar()
+                    emp_name.set(f"{rec[1]}")
                     emp_desig = StringVar()
+                    emp_desig.set(f"{rec[2]}")
                     emp_salary = StringVar()
+                    emp_salary.set(f"{rec[3]}")
                     emp_age = StringVar()
+                    emp_age.set(f"{rec[4]}")
                     emp_gender = StringVar()
-                    emp_gender.set('Select')
+                    emp_gender.set(f"{rec[5]}")
                     emp_email = StringVar()
+                    emp_email.set(f"{rec[6]}")
                     emp_dob = StringVar()
+                    dob_string = str(rec[7])
+                    dob = dob_string[-2] + dob_string[-1] + "/" + dob_string[-5] + dob_string[-4] + "/" + dob_string[-10] + dob_string[-9] + dob_string[-8] + dob_string[-7]
+                    
                     emp_doj = StringVar()
+                    doj_string = str(rec[8])
+                    doj = doj_string[-2] + doj_string[-1] + "/" + doj_string[-5] + doj_string[-4] + "/" + doj_string[-10] + doj_string[-9] + doj_string[-8] + doj_string[-7]
                     emp_accno = StringVar()
+                    emp_accno.set(f"{rec[9]}")
                     emp_contact = StringVar()
+                    emp_contact.set(f"{rec[10]}")
                     emp_add = StringVar()
+                    emp_add.set(f"{rec[11]}")
                         
-                    text1 = Label(btn6frame,text='Employee ID:',font=('times new roman',16),bg='white')
+                    text1 = Label(btn6frame,text='Employee ID:',font=('times new roman',16),bg='#F9E8D9')
                     text1.grid(column=0,row=0)
-                    text2 = Label(btn6frame,text='Employee Name:',font=('times new roman',16),bg='white')
+                    text2 = Label(btn6frame,text='Employee Name:',font=('times new roman',16),bg='#F9E8D9')
                     text2.grid(column=0,row=1)
-                    text3 = Label(btn6frame,text='Designation:',font=('times new roman',16),bg='white')
+                    text3 = Label(btn6frame,text='Designation:',font=('times new roman',16),bg='#F9E8D9')
                     text3.grid(column=0,row=2)
-                    text4 = Label(btn6frame,text='Salary(in ₹):',font=('times new roman',16),bg='white')
+                    text4 = Label(btn6frame,text='Salary(in ₹):',font=('times new roman',16),bg='#F9E8D9')
                     text4.grid(column=0,row=3)
-                    text5 = Label(btn6frame,text='Age:',font=('times new roman',16),bg='white')
+                    text5 = Label(btn6frame,text='Age:',font=('times new roman',16),bg='#F9E8D9')
                     text5.grid(column=0,row=4)
-                    text6 = Label(btn6frame,text='Gender:',font=('times new roman',16),bg='white')
+                    text6 = Label(btn6frame,text='Gender:',font=('times new roman',16),bg='#F9E8D9')
                     text6.grid(column=0,row=5)
-                    text7 = Label(btn6frame,text='Email:',font=('times new roman',16),bg='white')
+                    text7 = Label(btn6frame,text='Email:',font=('times new roman',16),bg='#F9E8D9')
                     text7.grid(column=2,row=0)
-                    text8 = Label(btn6frame,text='D.O.B:',font=('times new roman',16),bg='white')
+                    text8 = Label(btn6frame,text='D.O.B:',font=('times new roman',16),bg='#F9E8D9')
                     text8.grid(column=2,row=1)
-                    text9 = Label(btn6frame,text='D.O.J:',font=('times new roman',16),bg='white')
+                    text9 = Label(btn6frame,text='D.O.J:',font=('times new roman',16),bg='#F9E8D9')
                     text9.grid(column=2,row=2)
-                    text10 = Label(btn6frame,text='Acc No.:',font=('times new roman',16),bg='white')
+                    text10 = Label(btn6frame,text='Acc No.:',font=('times new roman',16),bg='#F9E8D9')
                     text10.grid(column=2,row=3)
-                    text11 = Label(btn6frame,text='Contact No.:',font=('times new roman',16),bg='white')
+                    text11 = Label(btn6frame,text='Contact No.:',font=('times new roman',16),bg='#F9E8D9')
                     text11.grid(column=2,row=4)
-                    text12 = Label(btn6frame,text='Address:',font=('times new roman',16),bg='white')
+                    text12 = Label(btn6frame,text='Address:',font=('times new roman',16),bg='#F9E8D9')
                     text12.grid(column=0,row=6)
                         
                     entry1 = Entry(btn6frame, textvariable=emp_id ,bg='lightyellow',bd=3,font=('Times new roman',16))
@@ -606,8 +620,10 @@ def adminmain():
                     entry7.grid(column=3,row=0)
                     entry8 = DateEntry(btn6frame, textvariable=emp_dob ,bg='lightyellow',bd=3,font=('Times new roman',16),date_pattern='dd/MM/yyyy')
                     entry8.grid(column=3,row=1)
+                    entry8.set_date(f"{dob}")
                     entry9 = DateEntry(btn6frame, textvariable=emp_doj ,bg='lightyellow',bd=3,font=('Times new roman',16),date_pattern='dd/MM/yyyy')
                     entry9.grid(column=3,row=2)
+                    entry9.set_date(f"{doj}")
                     entry10 = Entry(btn6frame, textvariable=emp_accno ,bg='lightyellow',bd=3,font=('Times new roman',16))
                     entry10.grid(column=3,row=3)
                     entry11 = Entry(btn6frame, textvariable=emp_contact ,bg='lightyellow',bd=3,font=('Times new roman',16))
@@ -624,51 +640,20 @@ def adminmain():
 
                         modify_lis = [emp_id.get(), emp_name.get(), emp_desig.get(), emp_salary.get(), emp_age.get(), emp_gender.get(), emp_email.get(), dob, doj, emp_accno.get(), emp_contact.get(), emp_add.get()]
 
-                        if str(modify_lis[0]).isnumeric() == False and str(modify_lis[0]) != "" or str(modify_lis[3]).isnumeric() == False and str(modify_lis[3]) != "" or str(modify_lis[4]).isnumeric() == False and str(modify_lis[4]) != "" or str(modify_lis[9]).isnumeric() == False and str(modify_lis[9]) != "" or str(modify_lis[10]).isnumeric() == False and str(modify_lis[10]) != "" or str(modify_lis[1]).isalpha() == False and str(modify_lis[1]) != "" or str(modify_lis[2]).isalpha() == False and str(modify_lis[2]) != "" or str(modify_lis[5]).isalpha() == False and str(modify_lis[5]) != "" or str(modify_lis[11]).isalpha() == False and str(modify_lis[11]) != "":
+                        if modify_lis[0].isnumeric() == False or str(modify_lis[0]) == "" or modify_lis[3].isnumeric() == False or str(modify_lis[3]) == "" or modify_lis[4].isnumeric() == False or str(modify_lis[4]) == "" or modify_lis[9].isnumeric() == False or str(modify_lis[9]) == "" or modify_lis[10].isnumeric() == False or str(modify_lis[10]) == "" or str(modify_lis[1]).isalpha() == False or str(modify_lis[1]) == "" or str(modify_lis[2]).isalpha() == False or str(modify_lis[2]) == "" or str(modify_lis[5]).isalpha() == False or str(modify_lis[5]) == "" or str(modify_lis[11]) == "":
                             messagebox.showerror("Error", "Please enter valid values.")
                             id_check()
 
                         else:
-                            if modify_lis[0] == "" or str(modify_lis[0]) == rec[0]:
-                                modify_lis[0] = rec[0] 
-                            
-                            if modify_lis[1] == "" or str(modify_lis[1]) == rec[1]:
-                                modify_lis[1] = rec[1] 
-
-                            if modify_lis[2] == "" or str(modify_lis[2]) == rec[2]:
-                                modify_lis[2] = rec[2] 
-
-                            if modify_lis[3] == "" or str(modify_lis[3]) == rec[3]:
-                                modify_lis[3] = rec[3] 
-
-                            if modify_lis[4] == "" or str(modify_lis[4]) == rec[4]:
-                                modify_lis[4] = rec[4] 
-
-                            if modify_lis[5] == "Select" or str(modify_lis[5]) == rec[5]:
-                                modify_lis[5] = rec[5] 
-
-                            if modify_lis[6] == "" or str(modify_lis[6]) == rec[6]:
-                                modify_lis[6] = rec[6] 
-
-                            if modify_lis[7] == "" or str(modify_lis[7]) == rec[7]:
-                                modify_lis[7] = rec[7] 
-
-                            if modify_lis[8] == "" or str(modify_lis[8]) == rec[8]:
-                                modify_lis[8] = rec[8] 
-
-                            if modify_lis[9] == "" or str(modify_lis[9]) == rec[9]:
-                                modify_lis[9] = rec[9] 
-
-                            if modify_lis[10] == "" or str(modify_lis[10]) == rec[10]:
-                                modify_lis[10] = rec[10] 
-
-                            if modify_lis[11] == "" or str(modify_lis[11]) == rec[11]:
-                                modify_lis[11] = rec[11] 
-                            
-                            cursor.execute(f"UPDATE EMP_DETAILS SET EMP_ID = {modify_lis[0]}, NAME = '{modify_lis[1]}', DESIGNATION = '{modify_lis[2]}', SALARY = {modify_lis[3]}, AGE = {modify_lis[4]}, GENDER = '{modify_lis[5]}', EMAIL = '{modify_lis[6]}', DOB = '{modify_lis[7]}', DOJ = '{modify_lis[8]}', ACCOUNT_NO = {modify_lis[9]}, CONTACT_NO = {modify_lis[10]}, ADDRESS = '{modify_lis[11]}'")
-                            connection.commit()
-                            messagebox.showinfo("Updated", "Employee info successfully updated.")
-                            modify_rec()
+                            cursor.execute(f"SELECT * FROM EMP_DETAILS WHERE EMP_ID={emp_id.get()};")
+                            row = cursor.fetchone()
+                            if row==None:
+                                cursor.execute(f"UPDATE EMP_DETAILS SET EMP_ID = {modify_lis[0]}, NAME = '{modify_lis[1]}', DESIGNATION = '{modify_lis[2]}', SALARY = {modify_lis[3]}, AGE = {modify_lis[4]}, GENDER = '{modify_lis[5]}', EMAIL = '{modify_lis[6]}', DOB = '{modify_lis[7]}', DOJ = '{modify_lis[8]}', ACCOUNT_NO = {modify_lis[9]}, CONTACT_NO = {modify_lis[10]}, ADDRESS = '{modify_lis[11]}'")
+                                connection.commit()
+                                messagebox.showinfo("Updated", "Employee info successfully updated.")
+                                modify_rec()
+                            else:
+                                messagebox.showerror("Error",f"The given Employee Id is already Linked with {row[1]}")
 
                     def on_enter_addemp(e):
                         modify_btn.config(bg='#01d449',fg='black')
