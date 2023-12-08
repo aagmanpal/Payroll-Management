@@ -5,7 +5,7 @@ from tkcalendar import DateEntry
 import mysql.connector
 from datetime import datetime
 #=========Establishing a connection in Mysql==============
-connection = mysql.connector.connect(host='localhost',user='root',passwd='123')
+connection = mysql.connector.connect(host='localhost',user='root',passwd='manusql')
 cursor = connection.cursor()
 cursor.execute('CREATE DATABASE IF NOT EXISTS PMS;')
 cursor.execute('USE PMS;')
@@ -132,7 +132,7 @@ def adminmain():
         text2.grid(column=0,row=1)
         text3 = Label(addemp_frame,text='Designation:',font=('times new roman',16),bg='white')
         text3.grid(column=0,row=2)
-        text4 = Label(addemp_frame,text='Salary:',font=('times new roman',16),bg='white')
+        text4 = Label(addemp_frame,text='Salary(in ₹):',font=('times new roman',16),bg='white')
         text4.grid(column=0,row=3)
         text5 = Label(addemp_frame,text='Age:',font=('times new roman',16),bg='white')
         text5.grid(column=0,row=4)
@@ -243,7 +243,7 @@ def adminmain():
         tree.column('desig',anchor='center')
         tree.heading('desig',text='DESIGNATION')
         tree.column('salary',anchor='center')
-        tree.heading('salary',text='SALARY')
+        tree.heading('salary',text='SALARY(in ₹)')
         tree.column('age',anchor='center')
         tree.heading('age',text='AGE')
         tree.column('gender',anchor='center')
@@ -293,7 +293,6 @@ def adminmain():
                         date += j
                 lis[8] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
                 tree.insert(parent='',index=END,values=lis)
-
 
     def particularemp_rec():
         rightframe.destroy()
@@ -382,7 +381,7 @@ def adminmain():
                     tree.column('desig',anchor='center')
                     tree.heading('desig',text='DESIGNATION')
                     tree.column('salary',anchor='center')
-                    tree.heading('salary',text='SALARY')
+                    tree.heading('salary',text='SALARY(in ₹)')
                     tree.column('age',anchor='center')
                     tree.heading('age',text='AGE')
                     tree.column('gender',anchor='center')
@@ -437,9 +436,6 @@ def adminmain():
         button2.bind("<Leave>",on_leave_showrecemp)
         button2.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
 
-        
-        
-
     def btn4_fun():
         rightframe.destroy()
         btn4frame = Frame(window,bg='white')
@@ -447,7 +443,6 @@ def adminmain():
         label.config(text='Delete Records of all Employees...')
         activebtn(4)
         
-
     def delete_rec():
         rightframe.destroy()
         btn5frame = Frame(window,bg='white')
@@ -507,51 +502,196 @@ def adminmain():
         delete_btn.bind("<Leave>",on_leave_showrecemp)
         delete_btn.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
 
-    def btn6_fun():
+    def modify_rec():
         rightframe.destroy()
         btn6frame = Frame(window,bg='#F9E8D9')
         btn6frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Modify a Record...')
         activebtn(6)
-        search_frame = Frame(btn6frame,bg='#F9E8D9',width=840,height=100)
-        search_frame.columnconfigure(0)
-        search_frame.columnconfigure(1)
-        search_frame.columnconfigure(2)
-        search_frame.columnconfigure(3)
-        search_frame.rowconfigure(0)
-        search_frame.rowconfigure(1)
-        search_frame.rowconfigure(2)
-        search_frame.pack()
-        emp_id = StringVar()
-        emp_name = StringVar()
-        text1 = Label(search_frame,text='Employee ID:',font=('times new roman',16),bg='#F9E8D9')
-        text1.grid(column=0,row=0,pady=15,padx=14)
-        text2 = Label(search_frame,text='Employee Name:',font=('times new roman',16),bg='#F9E8D9')
-        text2.grid(column=2,row=0,pady=15,padx=15)
-        entry1 = Entry(search_frame, textvariable=emp_id ,bg='lightyellow',bd=3,font=('Times new roman',16))
-        entry1.grid(column=1,row=0,pady=15,padx=14)
-        entry2 = Entry(search_frame, textvariable=emp_name ,bg='lightyellow',bd=3,font=('Times new roman',16))
-        entry2.grid(column=3,row=0,pady=15,padx=14)
-        def on_enter_search(e):
-            search_btn.config(bg='#01d449',fg='black')
-            
-        def on_leave_search(e):
-            search_btn.config(bg='#F9E8D9',fg='#01d449')
-        search_btn = Button(search_frame,text='Search',command = None, bg='#F9E8D9',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
-        search_btn.bind("<Enter>",on_enter_search)
-        search_btn.bind("<Leave>",on_leave_search)
-        search_btn.grid(row=1,column=1,columnspan=2,sticky=N,pady=8)
-        def on_enter_browse(e):
-            browse_btn.config(bg='#01d449',fg='black')
-            
-        def on_leave_browse(e):
-            browse_btn.config(bg='#F9E8D9',fg='#01d449')
-        browse_btn = Button(search_frame,text='Browse All Employee',command = None, bg='#F9E8D9',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
-        browse_btn.bind("<Enter>",on_enter_browse)
-        browse_btn.bind("<Leave>",on_leave_browse)
-        browse_btn.grid(row=2,column=1,columnspan=2,sticky=N,pady=8)
-        
-        
+
+        btn6frame.columnconfigure(0, weight = 1)
+        btn6frame.columnconfigure(1, weight = 1)
+        btn6frame.columnconfigure(2, weight = 1)
+        btn6frame.columnconfigure(3, weight = 1)
+        btn6frame.rowconfigure(0, weight = 1)
+        btn6frame.rowconfigure(1, weight = 1)
+        btn6frame.rowconfigure(2, weight = 1)
+        btn6frame.rowconfigure(3, weight = 1)
+        btn6frame.rowconfigure(4, weight = 1)
+        btn6frame.rowconfigure(5, weight = 1)
+        btn6frame.rowconfigure(6, weight = 1)
+        btn6frame.rowconfigure(7, weight = 1)
+
+        emp_id1 = StringVar()
+
+        text = Label(btn6frame,text='Employee ID:',font=('times new roman',16),bg='white')
+        text.grid(column=0,row=0)
+
+        entry = Entry(btn6frame, textvariable=emp_id1 ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry.grid(column=1,row=0)
+
+        def id_check():
+            empid = emp_id1.get()
+
+            if empid == "":
+                messagebox.showerror("Error","Please enter an Employee ID.")
+            elif empid.isnumeric() == False:
+                messagebox.showerror("Error","Please enter a valid Employee ID.")
+            else:
+                cursor.execute(f"SELECT * FROM EMP_DETAILS WHERE EMP_ID = {empid};") 
+                rec = cursor.fetchone()
+
+                if rec == (None):
+                    messagebox.showerror("Error",f"No employee with ID {empid} exists.")
+                else:
+                    
+                    text.destroy()
+                    entry.destroy()
+                    check_btn.destroy()
+
+                    emp_id = StringVar()
+                    emp_name = StringVar()
+                    emp_desig = StringVar()
+                    emp_salary = StringVar()
+                    emp_age = StringVar()
+                    emp_gender = StringVar()
+                    emp_gender.set('Select')
+                    emp_email = StringVar()
+                    emp_dob = StringVar()
+                    emp_doj = StringVar()
+                    emp_accno = StringVar()
+                    emp_contact = StringVar()
+                    emp_add = StringVar()
+                        
+                    text1 = Label(btn6frame,text='Employee ID:',font=('times new roman',16),bg='white')
+                    text1.grid(column=0,row=0)
+                    text2 = Label(btn6frame,text='Employee Name:',font=('times new roman',16),bg='white')
+                    text2.grid(column=0,row=1)
+                    text3 = Label(btn6frame,text='Designation:',font=('times new roman',16),bg='white')
+                    text3.grid(column=0,row=2)
+                    text4 = Label(btn6frame,text='Salary(in ₹):',font=('times new roman',16),bg='white')
+                    text4.grid(column=0,row=3)
+                    text5 = Label(btn6frame,text='Age:',font=('times new roman',16),bg='white')
+                    text5.grid(column=0,row=4)
+                    text6 = Label(btn6frame,text='Gender:',font=('times new roman',16),bg='white')
+                    text6.grid(column=0,row=5)
+                    text7 = Label(btn6frame,text='Email:',font=('times new roman',16),bg='white')
+                    text7.grid(column=2,row=0)
+                    text8 = Label(btn6frame,text='D.O.B:',font=('times new roman',16),bg='white')
+                    text8.grid(column=2,row=1)
+                    text9 = Label(btn6frame,text='D.O.J:',font=('times new roman',16),bg='white')
+                    text9.grid(column=2,row=2)
+                    text10 = Label(btn6frame,text='Acc No.:',font=('times new roman',16),bg='white')
+                    text10.grid(column=2,row=3)
+                    text11 = Label(btn6frame,text='Contact No.:',font=('times new roman',16),bg='white')
+                    text11.grid(column=2,row=4)
+                    text12 = Label(btn6frame,text='Address:',font=('times new roman',16),bg='white')
+                    text12.grid(column=0,row=6)
+                        
+                    entry1 = Entry(btn6frame, textvariable=emp_id ,bg='lightyellow',bd=3,font=('Times new roman',16))
+                    entry1.grid(column=1,row=0)
+                    entry2 = Entry(btn6frame, textvariable=emp_name ,bg='lightyellow',bd=3,font=('Times new roman',16))
+                    entry2.grid(column=1,row=1)
+                    entry3 = Entry(btn6frame, textvariable=emp_desig ,bg='lightyellow',bd=3,font=('Times new roman',16))
+                    entry3.grid(column=1,row=2)
+                    entry4 = Entry(btn6frame, textvariable=emp_salary ,bg='lightyellow',bd=3,font=('Times new roman',16))
+                    entry4.grid(column=1,row=3)
+                    entry5 = Entry(btn6frame, textvariable=emp_age ,bg='lightyellow',bd=3,font=('Times new roman',16))
+                    entry5.grid(column=1,row=4)
+                    entry6 = OptionMenu(btn6frame, emp_gender ,'Male','Female')
+                    entry6.config(bg='lightyellow')
+                    entry6['menu'].config(bg='lightyellow')
+                    entry6.grid(column=1,row=5,sticky= E + W,padx=10)
+                    entry7 = Entry(btn6frame, textvariable=emp_email ,bg='lightyellow',bd=3,font=('Times new roman',16))
+                    entry7.grid(column=3,row=0)
+                    entry8 = DateEntry(btn6frame, textvariable=emp_dob ,bg='lightyellow',bd=3,font=('Times new roman',16),date_pattern='dd/MM/yyyy')
+                    entry8.grid(column=3,row=1)
+                    entry9 = DateEntry(btn6frame, textvariable=emp_doj ,bg='lightyellow',bd=3,font=('Times new roman',16),date_pattern='dd/MM/yyyy')
+                    entry9.grid(column=3,row=2)
+                    entry10 = Entry(btn6frame, textvariable=emp_accno ,bg='lightyellow',bd=3,font=('Times new roman',16))
+                    entry10.grid(column=3,row=3)
+                    entry11 = Entry(btn6frame, textvariable=emp_contact ,bg='lightyellow',bd=3,font=('Times new roman',16))
+                    entry11.grid(column=3,row=4)
+                    entry12 = Entry(btn6frame, textvariable=emp_add ,bg='lightyellow',bd=3,font=('Times new roman',16))
+                    entry12.grid(column=1,row=6,columnspan=3,sticky= E + W,padx=10)
+                    
+                    def modify_emp():
+                        dob_str = str(emp_dob.get())
+                        dob = dob_str[-4] + dob_str[-3] + dob_str[-2] + dob_str[-1] + "-" + dob_str[-7] + dob_str[-6] + "-" + dob_str[-10] + dob_str[-9]
+
+                        doj_str = str(emp_doj.get())
+                        doj = doj_str[-4] + doj_str[-3] + doj_str[-2] + doj_str[-1] + "-" + doj_str[-7] + doj_str[-6] + "-" + doj_str[-10] + doj_str[-9]
+
+                        modify_lis = [emp_id.get(), emp_name.get(), emp_desig.get(), emp_salary.get(), emp_age.get(), emp_gender.get(), emp_email.get(), dob, doj, emp_accno.get(), emp_contact.get(), emp_add.get()]
+
+                        if str(modify_lis[0]).isnumeric() == False and str(modify_lis[0]) != "" or str(modify_lis[3]).isnumeric() == False and str(modify_lis[3]) != "" or str(modify_lis[4]).isnumeric() == False and str(modify_lis[4]) != "" or str(modify_lis[9]).isnumeric() == False and str(modify_lis[9]) != "" or str(modify_lis[10]).isnumeric() == False and str(modify_lis[10]) != "" or str(modify_lis[1]).isalpha() == False and str(modify_lis[1]) != "" or str(modify_lis[2]).isalpha() == False and str(modify_lis[2]) != "" or str(modify_lis[5]).isalpha() == False and str(modify_lis[5]) != "" or str(modify_lis[11]).isalpha() == False and str(modify_lis[11]) != "":
+                            messagebox.showerror("Error", "Please enter valid values.")
+                            id_check()
+
+                        else:
+                            if modify_lis[0] == "" or str(modify_lis[0]) == rec[0]:
+                                modify_lis[0] = rec[0] 
+                            
+                            if modify_lis[1] == "" or str(modify_lis[1]) == rec[1]:
+                                modify_lis[1] = rec[1] 
+
+                            if modify_lis[2] == "" or str(modify_lis[2]) == rec[2]:
+                                modify_lis[2] = rec[2] 
+
+                            if modify_lis[3] == "" or str(modify_lis[3]) == rec[3]:
+                                modify_lis[3] = rec[3] 
+
+                            if modify_lis[4] == "" or str(modify_lis[4]) == rec[4]:
+                                modify_lis[4] = rec[4] 
+
+                            if modify_lis[5] == "Select" or str(modify_lis[5]) == rec[5]:
+                                modify_lis[5] = rec[5] 
+
+                            if modify_lis[6] == "" or str(modify_lis[6]) == rec[6]:
+                                modify_lis[6] = rec[6] 
+
+                            if modify_lis[7] == "" or str(modify_lis[7]) == rec[7]:
+                                modify_lis[7] = rec[7] 
+
+                            if modify_lis[8] == "" or str(modify_lis[8]) == rec[8]:
+                                modify_lis[8] = rec[8] 
+
+                            if modify_lis[9] == "" or str(modify_lis[9]) == rec[9]:
+                                modify_lis[9] = rec[9] 
+
+                            if modify_lis[10] == "" or str(modify_lis[10]) == rec[10]:
+                                modify_lis[10] = rec[10] 
+
+                            if modify_lis[11] == "" or str(modify_lis[11]) == rec[11]:
+                                modify_lis[11] = rec[11] 
+                            
+                            cursor.execute(f"UPDATE EMP_DETAILS SET EMP_ID = {modify_lis[0]}, NAME = '{modify_lis[1]}', DESIGNATION = '{modify_lis[2]}', SALARY = {modify_lis[3]}, AGE = {modify_lis[4]}, GENDER = '{modify_lis[5]}', EMAIL = '{modify_lis[6]}', DOB = '{modify_lis[7]}', DOJ = '{modify_lis[8]}', ACCOUNT_NO = {modify_lis[9]}, CONTACT_NO = {modify_lis[10]}, ADDRESS = '{modify_lis[11]}'")
+                            connection.commit()
+                            messagebox.showinfo("Updated", "Employee info successfully updated.")
+                            modify_rec()
+
+                    def on_enter_addemp(e):
+                        modify_btn.config(bg='#01d449',fg='black')
+
+                    def on_leave_addemp(e):
+                        modify_btn.config(bg='white',fg='#01d449')
+
+                    modify_btn = Button(btn6frame,text='Modify Employee',command=modify_emp,bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+                    modify_btn.bind("<Enter>",on_enter_addemp)
+                    modify_btn.bind("<Leave>",on_leave_addemp)
+                    modify_btn.grid(row=7,column=0,columnspan=4,sticky=N,pady=5)
+
+        def on_enter_addemp(e):
+            check_btn.config(bg='#01d449',fg='black')
+
+        def on_leave_addemp(e):
+            check_btn.config(bg='white',fg='#01d449')
+
+        check_btn = Button(btn6frame,text='Check ID',command=id_check,bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        check_btn.bind("<Enter>",on_enter_addemp)
+        check_btn.bind("<Leave>",on_leave_addemp)
+        check_btn.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
+
     def btn7_fun():
         rightframe.destroy()
         btn7frame = Frame(window,bg='white')
@@ -597,7 +737,7 @@ def adminmain():
     btn4.grid(row = 4, column=0, sticky= E + W, padx = 20, pady = 2.5)
     btn5 = Button(left_frame, text = "Delete Record of a Particular Employee", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = delete_rec,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn5.grid(row = 5, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn6 = Button(left_frame, text = "Modify a Record", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn6_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn6 = Button(left_frame, text = "Modify a Record", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = modify_rec,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn6.grid(row = 6, column=0, sticky= E + W, padx = 20, pady = 2.5)
     btn7 = Button(left_frame, text = "Display Payroll", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn7_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn7.grid(row = 7, column=0, sticky= E + W, padx = 20, pady = 2.5)
