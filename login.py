@@ -12,7 +12,14 @@ cursor.execute('USE PMS;')
 #==========creating table for login details============
 cursor.execute("CREATE TABLE IF NOT EXISTS ADMIN_CREDENTIALS (Username varchar(20) not null,Password varchar(20) not null);")
 #=========Adding default login details to table==========
-cursor.execute("INSERT INTO ADMIN_CREDENTIALS VALUES ('aagman','123'),('shivaansh','123');") #============Login Detail
+cursor.execute("Select * from ADMIN_CREDENTIALS WHERE username='aagman';")
+flag = cursor.fetchone()
+if flag == None:
+    cursor.execute("INSERT INTO ADMIN_CREDENTIALS VALUES ('aagman','123');") #============Login Detail
+cursor.execute("Select * from ADMIN_CREDENTIALS WHERE username='shivaansh';")
+flag = cursor.fetchone()
+if flag == None:
+    cursor.execute("INSERT INTO ADMIN_CREDENTIALS VALUES ('shivaansh','123');") #============Login Detail
 #===========================
 cursor.execute("Select * from admin_credentials;")
 admins = cursor.fetchall()
