@@ -25,7 +25,18 @@ cursor.execute("Select * from admin_credentials;")
 admins = cursor.fetchall()
 #==========creating table for emp details===================
 cursor.execute("CREATE TABLE IF NOT EXISTS EMP_DETAILS (EMP_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,NAME VARCHAR(50) NOT NULL,DESIGNATION VARCHAR(30) NOT NULL,SALARY INT NOT NULL, AGE INT NOT NULL,GENDER TEXT NOT NULL,EMAIL varchar(40) NOT NULL,DOB DATE NOT NULL,DOJ DATE NOT NULL,ACCOUNT_NO VARCHAR(15) NOT NULL,CONTACT_NO VARCHAR(14) NOT NULL,ADDRESS VARCHAR(50) NOT NULL);")
-
+#=========Adding some employees to table==========
+cursor.execute("Select * from EMP_DETAILS WHERE NAME='Aagman';")
+flag = cursor.fetchone()
+if flag == None:
+    cursor.execute("INSERT INTO EMP_DETAILS VALUES (1,'Aagman','Developer',80000,17,'Male','aagmanpal@gmail.com','2006-06-13','2023-01-12','123456789','7843819008','Sulem Sarai, Prayagraj');") 
+    connection.commit()
+cursor.execute("Select * from EMP_DETAILS WHERE NAME='shivaansh';")
+flag = cursor.fetchone()
+if flag == None:
+    cursor.execute("INSERT INTO EMP_DETAILS VALUES (2,'Shivaansh','Developer',80000,17,'Male','kanchanshivaansh2006@gmail.com','2006-01-02','2023-12-07','987654321','8471064398','Nawab Yusuf Road, Prayagraj');") 
+    connection.commit()
+#===========================
 
 #Functions Defining
 
@@ -272,10 +283,7 @@ def adminmain():
         tree.configure(xscrollcommand=hor_scrollbar.set)
         hor_scrollbar.pack(side='bottom',fill='x')
 
-        #Pre-defined emp rec(not in database).
-        tree.insert(parent='',index=END,values=(1,'Aagman','Developer',80000,17,'Male','aagmanpal@gmail.com','13/06/2006','01/12/2023','123456789','7843819008','Sulem Sarai, Prayagraj'))
-        tree.insert(parent='',index=END,values=(2,'Shivaansh','Developer',80000,17,'Male','kanchanshivaansh2006@gmail.com','02/01/2006','07/12/2023','987654321','8471064398','Nawab Yusuf Road, Prayagraj'))
-        
+
         #Accessing database to get records of all employees.
         cursor.execute("SELECT * FROM EMP_DETAILS;")
         details = cursor.fetchall()
@@ -652,15 +660,13 @@ def adminmain():
                             id_check()
 
                         else:
-                            cursor.execute(f"SELECT * FROM EMP_DETAILS WHERE EMP_ID={emp_id.get()};")
-                            row = cursor.fetchone()
-                            if row==None:
-                                cursor.execute(f"UPDATE EMP_DETAILS SET EMP_ID = {modify_lis[0]}, NAME = '{modify_lis[1]}', DESIGNATION = '{modify_lis[2]}', SALARY = {modify_lis[3]}, AGE = {modify_lis[4]}, GENDER = '{modify_lis[5]}', EMAIL = '{modify_lis[6]}', DOB = '{modify_lis[7]}', DOJ = '{modify_lis[8]}', ACCOUNT_NO = {modify_lis[9]}, CONTACT_NO = {modify_lis[10]}, ADDRESS = '{modify_lis[11]}'")
+                            try:
+                                cursor.execute(f"UPDATE EMP_DETAILS SET EMP_ID = {modify_lis[0]}, NAME = '{modify_lis[1]}', DESIGNATION = '{modify_lis[2]}', SALARY = {modify_lis[3]}, AGE = {modify_lis[4]}, GENDER = '{modify_lis[5]}', EMAIL = '{modify_lis[6]}', DOB = '{modify_lis[7]}', DOJ = '{modify_lis[8]}', ACCOUNT_NO = {modify_lis[9]}, CONTACT_NO = {modify_lis[10]}, ADDRESS = '{modify_lis[11]}' WHERE EMP_ID = {empid};")
                                 connection.commit()
                                 messagebox.showinfo("Updated", "Employee info successfully updated.")
                                 modify_rec()
-                            else:
-                                messagebox.showerror("Error",f"The given Employee Id is already Linked with {row[1]}")
+                            except Exception as ex:
+                                messagebox.showerror("Error",f"Error: {str(ex)}")
 
                     def on_enter_addemp(e):
                         modify_btn.config(bg='#01d449',fg='black')
@@ -779,30 +785,6 @@ def login():
     passwordlabel.grid(row=2,column=0)
     passwordentry = Entry(loginframe,font=('helvetica',14),bd=3,fg='grey10')
     passwordentry.grid(row=2,column=2)
-
-    '''def run():
-        if admin_flag.get()==True:
-            loginbutton = Button(loginframe,text='Login as Admin',font=('times new roman',14),width=12,bg='black',fg='white',activebackground='black',activeforeground='white',cursor='hand2',command=adminlogin)
-            loginbutton.grid(row=3,column=1,pady=40)
-        else:
-            loginbutton = Button(loginframe,text='Employee Login',font=('times new roman',14),width=12,bg='black',fg='white',activebackground='black',activeforeground='white',cursor='hand2',command=emplogin)
-            loginbutton.grid(row=3,column=1,pady=40)
-        
-    
-    admin_flag= BooleanVar()
-    checkbox=Checkbutton(root,text='Login as Admin',variable=admin_flag,font=('helvetica',10),command=run)
-    checkbox.place(x=252,y=285)
-    
-    
-    def emplogin():
-        if usernameentry.get()=='' or passwordentry.get()=='':
-            messagebox.showerror('Error','Fields cannot be empty!')
-        elif (usernameentry.get(),passwordentry.get()) in emp:
-            messagebox.showinfo('Success',"You've been logged in sucessfully!")
-            root.destroy()
-            empmain()
-        else:
-            messagebox.showerror('Incorrect details','Please enter correct credentials!')'''
         
     def adminlogin():
         if usernameentry.get()=='' or passwordentry.get()=='':
