@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkcalendar import DateEntry
 import mysql.connector
 from datetime import datetime
+import math
 #=========Establishing a connection in Mysql==============
 connection = mysql.connector.connect(host='localhost',user='root',passwd='123')
 cursor = connection.cursor()
@@ -24,17 +25,17 @@ if flag == None:
 cursor.execute("Select * from admin_credentials;")
 admins = cursor.fetchall()
 #==========creating table for emp details===================
-cursor.execute("CREATE TABLE IF NOT EXISTS EMP_DETAILS (EMP_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,NAME VARCHAR(50) NOT NULL,DESIGNATION VARCHAR(30) NOT NULL,SALARY INT NOT NULL, AGE INT NOT NULL,GENDER TEXT NOT NULL,EMAIL varchar(40) NOT NULL,DOB DATE NOT NULL,DOJ DATE NOT NULL,ACCOUNT_NO VARCHAR(15) NOT NULL,CONTACT_NO VARCHAR(14) NOT NULL,ADDRESS VARCHAR(50) NOT NULL);")
+cursor.execute("CREATE TABLE IF NOT EXISTS EMP_DETAILS (EMP_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,NAME VARCHAR(50) NOT NULL,DESIGNATION VARCHAR(30) NOT NULL,SALARY INT NOT NULL, AGE INT NOT NULL,GENDER TEXT NOT NULL,EMAIL varchar(40) NOT NULL,DOB DATE NOT NULL,DOJ DATE NOT NULL,ACCOUNT_NO VARCHAR(15) NOT NULL,CONTACT_NO VARCHAR(14) NOT NULL,ADDRESS VARCHAR(50) NOT NULL,LOAN INT(10) NOT NULL,INTEREST INT(3) NOT NULL,LOAN_DATE DATE,REPAYMENT_TIME INT NOT NULL);")
 #=========Adding some employees to table==========
 cursor.execute("Select * from EMP_DETAILS WHERE NAME='Aagman';")
 flag = cursor.fetchone()
 if flag == None:
-    cursor.execute("INSERT INTO EMP_DETAILS VALUES (1,'Aagman','Developer',80000,17,'Male','aagmanpal@gmail.com','2006-06-13','2023-01-12','123456789','7843819008','Sulem Sarai, Prayagraj');") 
+    cursor.execute("INSERT INTO EMP_DETAILS VALUES (1,'Aagman','Developer',80000,17,'Male','aagmanpal@gmail.com','2006-06-13','2023-01-12','123456789','7843819008','Sulem Sarai, Prayagraj',0,0,NULL,0);") 
     connection.commit()
 cursor.execute("Select * from EMP_DETAILS WHERE NAME='shivaansh';")
 flag = cursor.fetchone()
 if flag == None:
-    cursor.execute("INSERT INTO EMP_DETAILS VALUES (2,'Shivaansh','Developer',80000,17,'Male','kanchanshivaansh2006@gmail.com','2006-01-02','2023-12-07','987654321','8471064398','Nawab Yusuf Road, Prayagraj');") 
+    cursor.execute("INSERT INTO EMP_DETAILS VALUES (2,'Shivaansh','Developer',80000,17,'Male','kanchanshivaansh2006@gmail.com','2006-01-02','2023-12-07','987654321','8471064398','Nawab Yusuf Road, Prayagraj',0,0,NULL,0);") 
     connection.commit()
 #===========================
 
@@ -220,7 +221,7 @@ def adminmain():
                         doj_obj = datetime.strptime(doj_str, '%d/%m/%Y')
                         doj = doj_obj.strftime('%Y-%m-%d')
                         #=====================================================
-                        cursor.execute(f"INSERT INTO EMP_DETAILS VALUES ({emp_id.get()},'{emp_name.get()}','{emp_desig.get()}',{int(emp_salary.get())},{int(emp_age.get())},'{emp_gender.get()}','{emp_email.get()}','{dob}','{doj}','{emp_accno.get()}','{str(emp_contact.get())}','{emp_add.get()}');")
+                        cursor.execute(f"INSERT INTO EMP_DETAILS VALUES ({emp_id.get()},'{emp_name.get()}','{emp_desig.get()}',{int(emp_salary.get())},{int(emp_age.get())},'{emp_gender.get()}','{emp_email.get()}','{dob}','{doj}','{emp_accno.get()}','{str(emp_contact.get())}','{emp_add.get()}',0,0,NULL,0);")
                         connection.commit()
                         messagebox.showinfo("Added :)","Employee Added Successfully...")
                         addemp()
@@ -239,19 +240,153 @@ def adminmain():
         button1.bind("<Leave>",on_leave_addemp)
         button1.grid(row=7,column=0,columnspan=4,sticky=N,pady=5)
 
+    def manage_loans():
+        rightframe.destroy()
+        btn4frame = Frame(window,bg='white')
+        label.config(text='Manage Loans...')
+        activebtn(2)
+
+        btn4frame.columnconfigure(0, weight = 1)
+        btn4frame.columnconfigure(1, weight = 1)
+        btn4frame.columnconfigure(2, weight = 1)
+        btn4frame.columnconfigure(3, weight = 1)
+
+        btn4frame.rowconfigure(0, weight = 1)
+        btn4frame.rowconfigure(1, weight = 1)
+        #Added extra rows and columns to adjust positioning.
+        btn4frame.rowconfigure(2, weight = 1)
+        btn4frame.rowconfigure(3, weight = 1)
+        btn4frame.rowconfigure(4, weight = 1)
+        btn4frame.rowconfigure(5, weight = 1)
+        btn4frame.rowconfigure(6, weight = 1)
+        btn4frame.rowconfigure(7, weight = 1)
+
+        btn4frame.place(x=350,y=110,width=840,height=508)
+
+        emp_id = StringVar()
+
+        text1 = Label(btn4frame,text='Employee ID:',font=('times new roman',16),bg='white')
+        text1.grid(column=0,row=0)
+
+        entry1 = Entry(btn4frame, textvariable=emp_id ,bg='lightyellow',bd=3,font=('Times new roman',16))
+        entry1.grid(column=1,row=0)
+
+        def on_enter_showrecemp(e):
+            search_btn.config(bg='#01d449',fg='black')
+            
+        def on_leave_showrecemp(e):
+            search_btn.config(bg='white',fg='#01d449')
+
+        def emp_loan():
+            empid = emp_id.get()
+
+            if empid == "":
+                messagebox.showerror("Empty Field", "Please enter the required data.")
+            elif empid.isnumeric() != True:
+                messagebox.showerror("Error", "Please enter a valid ID.")
+            else:             
+                cursor.execute(f"SELECT * FROM EMP_DETAILS WHERE EMP_ID = {empid}")
+                details = cursor.fetchone()
+                
+                if details == None:
+                    messagebox.showerror("Error", f"No Employee with ID:{empid} exists.")
+                else:
+
+                    text1.destroy()
+                    entry1.destroy()
+                    search_btn.destroy()
+
+                    if details[13] == 0:
+                        text2 = Label(btn4frame,text=f'This employee (ID = {empid}) has no loans.',font=('times new roman',16),bg='white')
+                        text2.grid(column=0,row=0)
+                        
+                        def on_enter_showrecemp1(e):
+                            addloan.config(bg='#01d449',fg='black')
+                    
+                        def on_leave_showrecemp1(e):
+                            addloan.config(bg='white',fg='#01d449')
+
+                        def on_enter_showrecemp2(e):
+                            back.config(bg='#01d449',fg='black')
+                    
+                        def on_leave_showrecemp2(e):
+                            back.config(bg='white',fg='#01d449')
+
+                        def add_loan():
+                            text2.destroy()
+                            addloan.destroy()
+                            back.destroy()
+
+                            text3 = Label(btn4frame,text='Amount(in ₹):',font=('times new roman',16),bg='white')
+                            text3.grid(column=0,row=0,)
+                            text4 = Label(btn4frame,text='Interest(% per month):',font=('times new roman',16),bg='white')
+                            text4.grid(column=0,row=1)
+                            text5 = Label(btn4frame,text='Repayment Time(in Years):',font=('times new roman',16),bg='white')
+                            text5.grid(column=0,row=2)
+
+                            entry1 = Entry(btn4frame ,bg='lightyellow',bd=3,font=('Times new roman',16))
+                            entry1.grid(column=1,row=0)
+                            entry2 = Entry(btn4frame, bg='lightyellow',bd=3,font=('Times new roman',16))
+                            entry2.grid(column=1,row=1)
+                            entry3 = Entry(btn4frame, bg='lightyellow',bd=3,font=('Times new roman',16))
+                            entry3.grid(column=1,row=2)
+
+                            def on_enter_showrecemp3(e):
+                                updateloan.config(bg='#01d449',fg='black')
+                    
+                            def on_leave_showrecemp3(e):
+                                updateloan.config(bg='white',fg='#01d449')
+
+                            def update_loan():
+                                amt = entry1.get()
+                                interest = entry2.get()
+                                repay_time = entry3.get()
+
+                                if amt == "" or interest == "" or repay_time == "":
+                                    messagebox.showerror("Empty Field", "Please fill all the details.")
+                                elif amt.isnumeric() != True or interest.isnumeric() != True or repay_time.isnumeric() != True:
+                                    messagebox.showerror("Error", "Please enter valid data.")
+                                else:
+                                    cursor.execute("SELECT CURDATE();")
+                                    date = cursor.fetchone()[0]
+                                    cursor.execute(f"UPDATE EMP_DETAILS SET LOAN = {int(amt)}, INTEREST = {int(interest)}, LOAN_DATE = '{str(date)}', REPAYMENT_TIME = {int(repay_time)} WHERE EMP_ID = {empid};")
+                                    connection.commit()
+                                    messagebox.showinfo("Loan added",f"A loan has be successfully added to Employee ID: {empid}.")     
+                                    manage_loans()                       
+
+                            updateloan = Button(btn4frame,text='Add a Loan',command = update_loan, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+                            updateloan.bind("<Enter>",on_enter_showrecemp3)
+                            updateloan.bind("<Leave>",on_leave_showrecemp3)
+                            updateloan.grid(row=7,column=0,columnspan=4,sticky=N,pady=5)
+
+                        addloan = Button(btn4frame,text='Add a Loan',command = add_loan, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+                        addloan.bind("<Enter>",on_enter_showrecemp1)
+                        addloan.bind("<Leave>",on_leave_showrecemp1)
+                        addloan.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
+
+                        back = Button(btn4frame,text='Back',command = manage_loans, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+                        back.bind("<Enter>",on_enter_showrecemp2)
+                        back.bind("<Leave>",on_leave_showrecemp2)
+                        back.grid(row=2,column=0,columnspan=4,sticky=N,pady=0)
+        
+        search_btn = Button(btn4frame,text='Show Record',command = emp_loan, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+        search_btn.bind("<Enter>",on_enter_showrecemp)
+        search_btn.bind("<Leave>",on_leave_showrecemp)
+        search_btn.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
+        
     def allemp_rec():
         rightframe.destroy()
 
-        btn2frame = Frame(window,bg='white')
-        btn2frame.place(x=350,y=110,width=840,height=508)
+        btn3frame = Frame(window,bg='white')
+        btn3frame.place(x=350,y=110,width=840,height=508)
 
         label.config(text='Records of all Employee...')
-        activebtn(2)
+        activebtn(3)
 
         style=ttk.Style()
         style.theme_use('clam')
 
-        tree = ttk.Treeview(btn2frame,columns=('id','name','desig','salary','age','gender','email','dob','doj','accno','contact','add'),show='headings',height=10,)
+        tree = ttk.Treeview(btn3frame,columns=('id','name','desig','salary','age','gender','email','dob','doj','accno','contact','add',"loan","interest","loan_date","repayment_time","amount_due"),show='headings',height=10,)
         tree.pack(fill='both',expand=True)
 
         tree.column('id',anchor='center')
@@ -278,8 +413,18 @@ def adminmain():
         tree.heading('contact',text='CONTACT NO.')
         tree.column('add',anchor='center')
         tree.heading('add',text='ADDRESS')
+        tree.column('loan',anchor='center')
+        tree.heading('loan',text='LOANS(in ₹)')
+        tree.column('interest',anchor='center')
+        tree.heading('interest',text='INTEREST(%)')
+        tree.column('loan_date',anchor='center')
+        tree.heading('loan_date',text='DATE OF LOAN')
+        tree.column('repayment_time',anchor='center')
+        tree.heading('repayment_time',text='REPAYMENT TIME(in Years)')
+        tree.column('amount_due',anchor='center')
+        tree.heading('amount_due',text='AMOUNT DUE(in ₹)')
         
-        hor_scrollbar = ttk.Scrollbar(btn2frame,orient='horizontal',command=tree.xview)
+        hor_scrollbar = ttk.Scrollbar(btn3frame,orient='horizontal',command=tree.xview)
         tree.configure(xscrollcommand=hor_scrollbar.set)
         hor_scrollbar.pack(side='bottom',fill='x')
 
@@ -307,6 +452,45 @@ def adminmain():
                     else:
                         date += j
                 lis[8] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
+
+                if lis[-1] == 0:
+                    lis[-1] = "-"
+                else:
+                    cursor.execute("SELECT CURDATE()")
+                    curdate = cursor.fetchone()[0]
+                    cursor.execute(f"SELECT DATEDIFF(CURRENT_DATE, '{lis[-2]}');")
+                    days = int(cursor.fetchone()[0])
+
+                    if int(str(curdate)[:4]) % 4 == 0:
+                        time_left = lis[-1] - (days/366)
+                        lis[-1] = f"{math.modf(time_left)[1]} years, {math.modf(time_left)[0] * 366}"
+                    else:
+                        time_left = lis[-1] - (days/365)
+                        lis[-1] = f"{math.modf(time_left)[1]} years, {math.modf(time_left)[0] * 365} days"     
+
+                if lis[-2] == None:
+                    lis[-2] = "-"
+                else:
+                    date = ""
+                    for j in str(lis[-2]):
+                        if j == "-":
+                            date += "/"
+                        else:
+                            date += j
+                    lis[-2] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
+                
+                if lis[-3] == 0:
+                    lis[-3] = "-"
+
+                if lis[-4] == 0:
+                    lis[-4] = "-"
+                    lis.append("-")
+                else:
+                    cursor.execute(f"SELECT REPAYMENT_TIME FROM EMP_DETAILS WHERE EMP_ID = {lis[0]}")
+                    time = float(cursor.fetchone()[0])
+                    amount = float(lis[-4]) * ((1 + float(lis[-3])) ** (float(time) - float(time_left)))
+                    lis.append(amount)
+                
                 tree.insert(parent='',index=END,values=lis)
 
     def particularemp_rec():
@@ -314,7 +498,7 @@ def adminmain():
         #btn3frame = Frame(window,bg='white')
         #btn3frame.place(x=350,y=110,width=840,height=508)
         label.config(text='Search Record of a Particular Employee...')
-        activebtn(3)
+        activebtn(4)
 
         rec_frame = Frame(window,bg='white')
         rec_frame.columnconfigure(0, weight = 1)
@@ -368,8 +552,8 @@ def adminmain():
                     entry1.destroy()
                     button2.destroy()
 
-                    btn3frame = Frame(window,bg='white')
-                    btn3frame.place(x=350,y=110,width=840,height=250)
+                    btn4frame = Frame(window,bg='white')
+                    btn4frame.place(x=350,y=110,width=840,height=250)
 
                     def on_enter_showrecemp2(e):
                         back_btn.config(bg='#01d449',fg='black')
@@ -386,7 +570,7 @@ def adminmain():
                     style=ttk.Style()
                     style.theme_use('clam')
 
-                    tree = ttk.Treeview(btn3frame,columns=('id','name','desig','salary','age','gender','email','dob','doj','accno','contact','add'),show='headings',height=10,)
+                    tree = ttk.Treeview(btn4frame,columns=('id','name','desig','salary','age','gender','email','dob','doj','accno','contact','add',"loan","interest","loan_date","repayment_time","amount_due"),show='headings',height=10,)
                     tree.pack(fill='both',expand=True)
 
                     tree.column('id',anchor='center')
@@ -413,6 +597,16 @@ def adminmain():
                     tree.heading('contact',text='CONTACT NO.')
                     tree.column('add',anchor='center')
                     tree.heading('add',text='ADDRESS')
+                    tree.column('loan',anchor='center')
+                    tree.heading('loan',text='LOANS(in ₹)')
+                    tree.column('interest',anchor='center')
+                    tree.heading('interest',text='INTEREST(%)')
+                    tree.column('loan_date',anchor='center')
+                    tree.heading('loan_date',text='DATE OF LOAN')
+                    tree.column('repayment_time',anchor='center')
+                    tree.heading('repayment_time',text='REPAYMENT TIME(in Years)')
+                    tree.column('amount_due',anchor='center')
+                    tree.heading('amount_due',text='AMOUNT DUE(in ₹)')
                     
                     style1 = ttk.Style()
                     style1.configure("Treeview.Scrollbar",
@@ -424,7 +618,7 @@ def adminmain():
                             gripborderwidth=0,
                             thickness=10)
                     
-                    hor_scrollbar = ttk.Scrollbar(btn3frame,orient='horizontal',command=tree.xview)
+                    hor_scrollbar = ttk.Scrollbar(btn4frame,orient='horizontal',command=tree.xview)
                     tree.configure(xscrollcommand=hor_scrollbar.set)
                     hor_scrollbar.pack(side="bottom",fill='x')
 
@@ -444,19 +638,51 @@ def adminmain():
                         else:
                             date += j
                     reclis[8] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
+
+                    if reclis[-1] == 0:
+                        reclis[-1] = "-"
+                    else:
+                        cursor.execute("SELECT CURDATE()")
+                        curdate = cursor.fetchone()[0]
+                        cursor.execute(f"SELECT DATEDIFF(CURRENT_DATE, '{reclis[-2]}');")
+                        days = int(cursor.fetchone()[0])
+
+                        if int(str(curdate)[:4]) % 4 == 0:
+                            time_left = reclis[-1] - (days/366)
+                            reclis[-1] = f"{math.modf(time_left)[1]} years, {math.modf(time_left)[0] * 366}"
+                        else:
+                            time_left = reclis[-1] - (days/365)
+                            reclis[-1] = f"{math.modf(time_left)[1]} years, {math.modf(time_left)[0] * 365} days"     
+
+                    if reclis[-2] == None:
+                        reclis[-2] = "-"
+                    else:
+                        date = ""
+                        for j in str(reclis[-2]):
+                            if j == "-":
+                                date += "/"
+                            else:
+                                date += j
+                        reclis[-2] = date[-2] + date[-1] + date[-3] + date[-5] + date[-4] + date[-6] + date[-10] + date[-9] + date[-8] + date[-7]
+                
+                    if reclis[-3] == 0:
+                        reclis[-3] = "-"
+
+                    if reclis[-4] == 0:
+                        reclis[-4] = "-"
+                        reclis.append("-")
+                    else:
+                        cursor.execute(f"SELECT REPAYMENT_TIME FROM EMP_DETAILS WHERE EMP_ID = {reclis[0]}")
+                        time = float(cursor.fetchone()[0])
+                        amount = float(reclis[-4]) * ((1 + float(reclis[-3])) ** (float(time) - float(time_left)))
+                        reclis.append(amount)
+
                     tree.insert(parent='',index=END,values=reclis)
 
         button2 = Button(rec_frame,text='Show Record',command = locate_emp, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
         button2.bind("<Enter>",on_enter_showrecemp)
         button2.bind("<Leave>",on_leave_showrecemp)
         button2.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
-
-    def btn4_fun():
-        rightframe.destroy()
-        btn4frame = Frame(window,bg='white')
-        btn4frame.place(x=350,y=110,width=840,height=508)
-        label.config(text='Delete Records of all Employees...')
-        activebtn(4)
         
     def delete_rec():
         rightframe.destroy()
@@ -727,11 +953,11 @@ def adminmain():
     
     btn1 = Button(left_frame, text = "Add Employee Record", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = addemp,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn1.grid(row = 1, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn2 = Button(left_frame, text = "Display Record of All Employees", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = allemp_rec,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn2 = Button(left_frame, text = "Manage Loans", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = manage_loans,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn2.grid(row = 2, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn3 = Button(left_frame, text = "Search Record for a Particular Employee", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = particularemp_rec,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn3 = Button(left_frame, text = "Display Record of All Employees", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = allemp_rec,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn3.grid(row = 3, column=0, sticky= E + W, padx = 20, pady = 2.5)
-    btn4 = Button(left_frame, text = "Delete Records of all the Employees", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = btn4_fun,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
+    btn4 = Button(left_frame, text = "Search Record for a Particular Employee", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = particularemp_rec,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn4.grid(row = 4, column=0, sticky= E + W, padx = 20, pady = 2.5)
     btn5 = Button(left_frame, text = "Delete Record of a Particular Employee", font=('helvetica',10),bg='#E6DDC4', height = 1, border = 0, command = delete_rec,cursor='hand2', activebackground='gold', activeforeground='black',pady=5)
     btn5.grid(row = 5, column=0, sticky= E + W, padx = 20, pady = 2.5)
