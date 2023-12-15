@@ -351,7 +351,9 @@ def adminmain():
                                     date = cursor.fetchone()[0]
                                     cursor.execute(f"UPDATE EMP_DETAILS SET LOAN = {int(amt)}, INTEREST = {int(interest)}, LOAN_DATE = '{str(date)}', REPAYMENT_TIME = {int(repay_time)} WHERE EMP_ID = {empid};")
                                     connection.commit()
-                                    messagebox.showinfo("Loan added",f"A loan has be successfully added to Employee ID: {empid}.")     
+                                    cursor.execute(f"SELECT * FROM EMP_DETAILS WHERE EMP_ID = {empid}")
+                                    details = cursor.fetchone()
+                                    messagebox.showinfo("Loan added", f"A loan of details:\nAmount: {details[-4]}\nInterest: {details[-3]}\nDate of Loan: {str(details[-2])[-2]}{str(details[-2])[-1]}/{str(details[-2])[-5]}{str(details[-2])[-4]}/{str(details[-2])[-10]}{str(details[-2])[-9]}{str(details[-2])[-8]}{str(details[-2])[-7]}\nRepayment time: {details[-1]}\nhas been successfully added to Employee ID:{empid}.")   
                                     manage_loans()                       
 
                             updateloan = Button(btn4frame,text='Add a Loan',command = update_loan, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
@@ -368,8 +370,40 @@ def adminmain():
                         back.bind("<Enter>",on_enter_showrecemp2)
                         back.bind("<Leave>",on_leave_showrecemp2)
                         back.grid(row=2,column=0,columnspan=4,sticky=N,pady=0)
-        
-        search_btn = Button(btn4frame,text='Show Record',command = emp_loan, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+
+                    elif details[13] != 0:
+                        text2 = Label(btn4frame,text=f'This employee (ID = {empid}) already has a loans.',font=('times new roman',16),bg='white')
+                        text2.grid(column=0,row=0)
+
+                        def on_enter_showrecemp1(e):
+                            removeloan.config(bg='#01d449',fg='black')
+                    
+                        def on_leave_showrecemp1(e):
+                            removeloan.config(bg='white',fg='#01d449')
+
+                        def on_enter_showrecemp2(e):
+                            back.config(bg='#01d449',fg='black')
+                    
+                        def on_leave_showrecemp2(e):
+                            back.config(bg='white',fg='#01d449')
+
+                        def remove_loan():
+                            messagebox.showinfo("Loan Removed", f"A loan of details:\nAmount: {details[-4]}\nInterest: {details[-3]}\nDate of Loan: {str(details[-2])[-2]}{str(details[-2])[-1]}/{str(details[-2])[-5]}{str(details[-2])[-4]}/{str(details[-2])[-10]}{str(details[-2])[-9]}{str(details[-2])[-8]}{str(details[-2])[-7]}\nRepayment time: {details[-1]}\nhas been successfully removed from Employee ID:{empid}.")
+                            cursor.execute(f"UPDATE EMP_DETAILS SET LOAN = 0, INTEREST = 0, LOAN_DATE = NULL, REPAYMENT_TIME  = 0 WHERE EMP_ID = {empid};")
+                            connection.commit()
+                            manage_loans()
+
+                        removeloan = Button(btn4frame,text='Remove a Loan',command = remove_loan, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+                        removeloan.bind("<Enter>",on_enter_showrecemp1)
+                        removeloan.bind("<Leave>",on_leave_showrecemp1)
+                        removeloan.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
+
+                        back = Button(btn4frame,text='Back',command = manage_loans, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+                        back.bind("<Enter>",on_enter_showrecemp2)
+                        back.bind("<Leave>",on_leave_showrecemp2)
+                        back.grid(row=2,column=0,columnspan=4,sticky=N,pady=0)
+
+        search_btn = Button(btn4frame,text='Show Loans',command = emp_loan, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
         search_btn.bind("<Enter>",on_enter_showrecemp)
         search_btn.bind("<Leave>",on_leave_showrecemp)
         search_btn.grid(row=1,column=0,columnspan=4,sticky=N,pady=5)
