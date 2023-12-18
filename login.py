@@ -1139,6 +1139,7 @@ def adminmain():
                         paydeduction = [net_tax, 0, 0, fine, other_ded, total_ded, net_pay]
                         others = ["Net Banking", "N/A"]
                         payreceipt.payslip(empinfo, paygain, paydeduction, others)
+                        messagebox.showinfo("Downloaded","Payslip Downloaded Successfully!")
 
                     download_btn = Button(btn9frame2,text='Download Payslip',command = download_payslip, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
                     download_btn.bind("<Enter>",on_enter_showrecemp2)
