@@ -19,17 +19,23 @@ cursor.execute('USE PMS;')
 cursor.execute("CREATE TABLE IF NOT EXISTS ADMIN_CREDENTIALS (Username varchar(20) not null,Password varchar(20) not null);")
 
 #Adding default login details to table
+cursor.execute("Select * from ADMIN_CREDENTIALS WHERE username='shivaansh';")
+flag = cursor.fetchone()
+
+if flag == None:
+    cursor.execute("INSERT INTO ADMIN_CREDENTIALS VALUES ('shivaansh','123');")
+
 cursor.execute("Select * from ADMIN_CREDENTIALS WHERE username='aagman';")
 flag = cursor.fetchone()
 
 if flag == None:
     cursor.execute("INSERT INTO ADMIN_CREDENTIALS VALUES ('aagman','123');")
 
-cursor.execute("Select * from ADMIN_CREDENTIALS WHERE username='shivaansh';")
+cursor.execute("Select * from ADMIN_CREDENTIALS WHERE username='pranjal';")
 flag = cursor.fetchone()
 
 if flag == None:
-    cursor.execute("INSERT INTO ADMIN_CREDENTIALS VALUES ('shivaansh','123');")
+    cursor.execute("INSERT INTO ADMIN_CREDENTIALS VALUES ('pranjal','123');")
 
 cursor.execute("Select * from admin_credentials;")
 admins = cursor.fetchall()
@@ -38,19 +44,26 @@ admins = cursor.fetchall()
 cursor.execute("CREATE TABLE IF NOT EXISTS EMP_DETAILS (EMP_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,NAME VARCHAR(50) NOT NULL,DESIGNATION VARCHAR(30) NOT NULL,SALARY INT NOT NULL, AGE INT NOT NULL,GENDER TEXT NOT NULL,EMAIL varchar(40) NOT NULL,DOB DATE NOT NULL,DOJ DATE NOT NULL,ACCOUNT_NO VARCHAR(15) NOT NULL,CONTACT_NO VARCHAR(14) NOT NULL,ADDRESS VARCHAR(50) NOT NULL);")
 
 #Adding default employees to table
+cursor.execute("Select * from EMP_DETAILS WHERE NAME='Shivaansh';")
+flag = cursor.fetchone()
+
+if flag == None:
+    cursor.execute("INSERT INTO EMP_DETAILS VALUES (1,'Shivaansh','Admin',80000,17,'Male','kanchanshivaansh2006@gmail.com','2006-01-02','2023-12-07','987654321','8471064398','Nawab Yusuf Road, Prayagraj');") 
+    connection.commit()
+
 cursor.execute("Select * from EMP_DETAILS WHERE NAME='Aagman';")
 flag = cursor.fetchone()
 
 if flag == None:
-    cursor.execute("INSERT INTO EMP_DETAILS VALUES (1,'Aagman','Admin',80000,17,'Male','aagmanpal@gmail.com','2006-06-13','2023-01-12','123456789','7843819008','Sulem Sarai, Prayagraj');") 
+    cursor.execute("INSERT INTO EMP_DETAILS VALUES (2,'Aagman','Admin',80000,17,'Male','aagmanpal@gmail.com','2006-06-13','2023-01-12','123456789','7843819008','Sulem Sarai, Prayagraj');") 
     connection.commit()
 
-cursor.execute("Select * from EMP_DETAILS WHERE NAME='shivaansh';")
+cursor.execute("Select * from EMP_DETAILS WHERE NAME='Pranjal';")
 flag = cursor.fetchone()
 
 if flag == None:
-    cursor.execute("INSERT INTO EMP_DETAILS VALUES (2,'Shivaansh','Admin',80000,17,'Male','kanchanshivaansh2006@gmail.com','2006-01-02','2023-12-07','987654321','8471064398','Nawab Yusuf Road, Prayagraj');") 
-    connection.commit()
+    cursor.execute("INSERT INTO EMP_DETAILS VALUES (3,'Pranjal','Admin',80000,17,'Male','pranjalsandilya@gmail.com','2006-09-14','2023-01-12','123456789','8459753183','Jhusi, Prayagraj');") 
+    connection.commit()   
 
 #Creating table for loans
 cursor.execute("CREATE TABLE IF NOT EXISTS EMP_LOANS(EMP_ID INT NOT NULL PRIMARY KEY,LOAN INT(10) NOT NULL,INTEREST INT(3) NOT NULL,LOAN_DATE DATE,REPAYMENT_TIME INT NOT NULL);")
@@ -68,15 +81,21 @@ flag = cursor.fetchone()
 if flag == None:
     cursor.execute("INSERT INTO EMP_LOANS VALUES (2,0,0,NULL,0);")
 
+cursor.execute("Select * from EMP_LOANS WHERE EMP_ID='3';")
+flag = cursor.fetchone()
+
+if flag == None:
+    cursor.execute("INSERT INTO EMP_LOANS VALUES (3,0,0,NULL,0);")
+
 #Creating table for bonus, fines etc
 cursor.execute("CREATE TABLE IF NOT EXISTS EMP_EXTRA(EMP_ID INT NOT NULL PRIMARY KEY,BONUS INT,OTHER_GAIN INT,FINES INT,OTHER_DED INT,MOP VARCHAR(20),NOTE VARCHAR(100),BONUS_MONTH INT);")
 
 #Adding default bonus,fines etc details to table
-cursor.execute("Select * from EMP_EXTRA WHERE EMP_ID='1';")
-flag = cursor.fetchone()
-
 cursor.execute("SELECT MONTH(NOW())")
 curmonth = cursor.fetchone()
+
+cursor.execute("Select * from EMP_EXTRA WHERE EMP_ID='1';")
+flag = cursor.fetchone()
 
 if flag == None:
     cursor.execute(f"INSERT INTO EMP_EXTRA VALUES (1,0,0,0,0,'Net Banking','N/A',{curmonth[0]});") 
@@ -87,11 +106,18 @@ flag = cursor.fetchone()
 if flag == None:
     cursor.execute(f"INSERT INTO EMP_EXTRA VALUES (2,0,0,0,0,'Net Banking','N/A',{curmonth[0]});")
 
+cursor.execute("Select * from EMP_EXTRA WHERE EMP_ID='3';")
+flag = cursor.fetchone()
+
+if flag == None:
+    cursor.execute(f"INSERT INTO EMP_EXTRA VALUES (3,0,0,0,0,'Net Banking','N/A',{curmonth[0]});") 
+
+
 #Defining functions
 
 def adminmain():
     window=Tk()
-    window.title('Payroll Management System | Developed by Aagman, Shivaansh, Pranjal')
+    window.title('Payroll Management System | Developed by Shivaansh, Aagman, Pranjal')
     window.geometry('1200x640+150+60')
     window.minsize(1200,640)
     window.resizable(False,False)
@@ -857,7 +883,7 @@ def adminmain():
                 messagebox.showerror("Error","Please enter an Employee ID.")
             elif empid.isnumeric() == False:
                 messagebox.showerror("Error","Please enter a valid Employee ID.")
-            elif empid in ["1","2"]:
+            elif empid in ["1","2","3"]:
                 messagebox.showerror("Error","Admins cannot remove other admins.")
             else:
                 cursor.execute(f"SELECT * FROM EMP_DETAILS WHERE EMP_ID = {empid};") 
@@ -1388,7 +1414,7 @@ def adminmain():
     #Footer Frame
     footer_frame = Frame(window,bg='#41b3a3',width=1200,height=25)
     footer_frame.place(x=0,y=615)
-    footer_text=Label(footer_frame,text='Developed by Aagman,Shivaansh, and Pranjal--Class 12th A',font=('helvetica',10,'bold'),fg='black',bg='#41b3a3')
+    footer_text=Label(footer_frame,text='Developed by Shivaansh, Aagman and Pranjal -- Class XII-A',font=('helvetica',10,'bold'),fg='black',bg='#41b3a3')
     footer_text.place(x=435,y=2)
 
     window.mainloop()
