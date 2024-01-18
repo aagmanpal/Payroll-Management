@@ -3,7 +3,7 @@ from PIL import Image, ImageFont, ImageDraw
 def payslip(empinfo, paygain, paydeduction, others):
     #empinfo = [employee ID, employee name, date and time, receipt no.]
     #paygain = [basic salary, bonus, other, gross salary]
-    #paydeduction = [tax deduction, health insurance, loans, fines, others, net deduction, net pay]
+    #paydeduction = [tax deduction, loans, fines, others, net deduction, net pay]
     #others = [payment mode, note]
 
     img = Image.open("assets/paysliptemp.png")
@@ -28,10 +28,9 @@ def payslip(empinfo, paygain, paydeduction, others):
     i.text((850,1607), f"-₹{paydeduction[3]}", fill = (0,0,0), font = font)
     i.text((850,1703), f"-₹{paydeduction[4]}", fill = (0,0,0), font = font)
     i.text((850,1799), f"-₹{paydeduction[5]}", fill = (0,0,0), font = font)
-    i.text((850,1895), f"₹{paydeduction[6]}", fill = (0,0,0), font = font)
 
     #Others
-    i.text((228,2095), f"{others[0]}", fill = (0,0,0), font = font)
-    i.text((924,2095), f"{others[1]}", fill = (0,0,0), font = font)
+    i.text((228,2005), f"{others[0]}", fill = (0,0,0), font = font)
+    i.text((924,2005), f"{others[1]}", fill = (0,0,0), font = font)
 
     img.save("receipt.png")
