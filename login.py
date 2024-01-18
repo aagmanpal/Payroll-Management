@@ -1317,7 +1317,10 @@ def adminmain():
 
                     cursor.execute(f"SELECT * FROM EMP_LOANS WHERE EMP_ID = {empid}")
                     loan_lis = list(cursor.fetchone())
-                    loan = round(((loan_lis[1] * ((1 + (loan_lis[2])) ** (loan_lis[4])))/(loan_lis[4]*12)),2)
+                    if loan_lis[4] != 0:
+                        loan = round(((loan_lis[1] * ((1 + (loan_lis[2])) ** (loan_lis[4])))/(loan_lis[4]*12)),2)
+                    else:
+                        loan = 0
 
                     total_ded = net_tax + fine + other_ded + loan
 
@@ -1368,7 +1371,7 @@ def adminmain():
                     def download_payslip():
                         empinfo = [rec[0], rec[1], f"{receipt_date} | {receipt_time}", receipt_code]
                         paygain = [rec[3], bonus, other_gain, round(gross_sal,2)]
-                        paydeduction = [round(net_tax,2), loan, 0, fine, other_ded, round(total_ded,2), round(net_pay,2)]
+                        paydeduction = [round(net_tax,2), loan, fine, other_ded, round(total_ded,2), round(net_pay,2)]
                         others = [mop, note]
                         payreceipt.payslip(empinfo, paygain, paydeduction, others)
                         messagebox.showinfo("Downloaded","Payslip Downloaded Successfully!")
