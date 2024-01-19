@@ -55,7 +55,7 @@ cursor.execute("Select * from EMP_DETAILS WHERE NAME='Aagman';")
 flag = cursor.fetchone()
 
 if flag == None:
-    cursor.execute("INSERT INTO EMP_DETAILS VALUES (2,'Aagman','Admin',80000,17,'Male','aagmanpal@gmail.com','2006-06-13','2023-01-12','123456789','7843819008','Sulem Sarai, Prayagraj');") 
+    cursor.execute("INSERT INTO EMP_DETAILS VALUES (2,'Aagman','Admin',80000,17,'Male','aagmanpal@gmail.com','2006-06-13','2023-01-12','987654321','7843819008','Sulem Sarai, Prayagraj');") 
     connection.commit()
 
 cursor.execute("Select * from EMP_DETAILS WHERE NAME='Pranjal';")
@@ -91,7 +91,7 @@ if flag == None:
 cursor.execute("CREATE TABLE IF NOT EXISTS EMP_EXTRA(EMP_ID INT NOT NULL PRIMARY KEY,BONUS INT,OTHER_GAIN INT,FINES INT,OTHER_DED INT,MOP VARCHAR(20),NOTE VARCHAR(100),BONUS_MONTH INT);")
 
 #Adding default bonus,fines etc details to table
-cursor.execute("SELECT MONTH(NOW())")
+cursor.execute("SELECT MONTH(NOW());")
 curmonth = cursor.fetchone()
 
 cursor.execute("Select * from EMP_EXTRA WHERE EMP_ID='1';")
@@ -104,7 +104,7 @@ cursor.execute("Select * from EMP_EXTRA WHERE EMP_ID='2';")
 flag = cursor.fetchone()
 
 if flag == None:
-    cursor.execute(f"INSERT INTO EMP_EXTRA VALUES (2,0,0,0,0,'Net Banking','N/A',{curmonth[0]});")
+    cursor.execute(f"INSERT INTO EMP_EXTRA VALUES (2,2000,0,0,0,'Net Banking','N/A',{curmonth[0]});")
 
 cursor.execute("Select * from EMP_EXTRA WHERE EMP_ID='3';")
 flag = cursor.fetchone()
@@ -957,6 +957,10 @@ def adminmain():
                     emp_name.set(f"{rec[1]}")
                     emp_desig = StringVar()
                     emp_desig.set(f"{rec[2]}")
+                    if emp_desig.get().upper()=='ADMIN':
+                        admin = True
+                    elif emp_desig.get().upper()!='ADMIN':
+                        admin=False
                     emp_salary = StringVar()
                     emp_salary.set(f"{rec[3]}")
                     emp_age = StringVar()
@@ -1045,18 +1049,32 @@ def adminmain():
                         if modify_lis[0].isnumeric() == False or str(modify_lis[0]) == "" or modify_lis[3].isnumeric() == False or str(modify_lis[3]) == "" or modify_lis[4].isnumeric() == False or str(modify_lis[4]) == "" or modify_lis[9].isnumeric() == False or str(modify_lis[9]) == "" or modify_lis[10].isnumeric() == False or str(modify_lis[10]) == "" or str(modify_lis[1]).isalpha() == False or str(modify_lis[1]) == "" or str(modify_lis[2]).isalpha() == False or str(modify_lis[2]) == "" or str(modify_lis[5]).isalpha() == False or str(modify_lis[5]) == "" or str(modify_lis[11]) == "":
                             messagebox.showerror("Error", "Please enter valid values.")
                             id_check()
-                        elif modify_lis[2].upper() == "ADMIN":
-                            messagebox.showerror("Error", "Admins cannot add more admins.")
-                        else:
-                            try:
-                                cursor.execute(f"UPDATE EMP_DETAILS SET EMP_ID = {modify_lis[0]}, NAME = '{modify_lis[1]}', DESIGNATION = '{modify_lis[2]}', SALARY = {modify_lis[3]}, AGE = {modify_lis[4]}, GENDER = '{modify_lis[5]}', EMAIL = '{modify_lis[6]}', DOB = '{modify_lis[7]}', DOJ = '{modify_lis[8]}', ACCOUNT_NO = {modify_lis[9]}, CONTACT_NO = {modify_lis[10]}, ADDRESS = '{modify_lis[11]}' WHERE EMP_ID = {empid};")
-                                cursor.execute(f"UPDATE EMP_LOANS SET EMP_ID = {modify_lis[0]} WHERE EMP_ID = {empid}")
-                                cursor.execute(f"UPDATE EMP_EXTRA SET EMP_ID = {modify_lis[0]} WHERE EMP_ID = {empid}")
-                                connection.commit()
-                                messagebox.showinfo("Updated", "Employee info successfully updated.")
-                                modify_rec()
-                            except Exception as ex:
-                                messagebox.showerror("Error",f"Error: {str(ex)}")
+                        elif admin==True:
+                            if emp_desig.get().upper()!='ADMIN':
+                                messagebox.showerror("Error", "Cannot change the designation of ADMIN.")
+                            else:
+                                try:
+                                    cursor.execute(f"UPDATE EMP_DETAILS SET EMP_ID = {modify_lis[0]}, NAME = '{modify_lis[1]}', DESIGNATION = 'ADMIN', SALARY = {modify_lis[3]}, AGE = {modify_lis[4]}, GENDER = '{modify_lis[5]}', EMAIL = '{modify_lis[6]}', DOB = '{modify_lis[7]}', DOJ = '{modify_lis[8]}', ACCOUNT_NO = {modify_lis[9]}, CONTACT_NO = {modify_lis[10]}, ADDRESS = '{modify_lis[11]}' WHERE EMP_ID = {empid};")
+                                    cursor.execute(f"UPDATE EMP_LOANS SET EMP_ID = {modify_lis[0]} WHERE EMP_ID = {empid}")
+                                    cursor.execute(f"UPDATE EMP_EXTRA SET EMP_ID = {modify_lis[0]} WHERE EMP_ID = {empid}")
+                                    connection.commit()
+                                    messagebox.showinfo("Updated", "Employee info successfully updated.")
+                                    modify_rec()
+                                except Exception as ex:
+                                    messagebox.showerror("Error",f"Error: {str(ex)}")
+                        elif admin==False:
+                            if emp_desig.get().upper()=='ADMIN':
+                                messagebox.showerror("Error", "Cannot add more ADMINS!.")
+                            else:
+                                try:
+                                    cursor.execute(f"UPDATE EMP_DETAILS SET EMP_ID = {modify_lis[0]}, NAME = '{modify_lis[1]}', DESIGNATION = '{modify_lis[2]}', SALARY = {modify_lis[3]}, AGE = {modify_lis[4]}, GENDER = '{modify_lis[5]}', EMAIL = '{modify_lis[6]}', DOB = '{modify_lis[7]}', DOJ = '{modify_lis[8]}', ACCOUNT_NO = {modify_lis[9]}, CONTACT_NO = {modify_lis[10]}, ADDRESS = '{modify_lis[11]}' WHERE EMP_ID = {empid};")
+                                    cursor.execute(f"UPDATE EMP_LOANS SET EMP_ID = {modify_lis[0]} WHERE EMP_ID = {empid}")
+                                    cursor.execute(f"UPDATE EMP_EXTRA SET EMP_ID = {modify_lis[0]} WHERE EMP_ID = {empid}")
+                                    connection.commit()
+                                    messagebox.showinfo("Updated", "Employee info successfully updated.")
+                                    modify_rec()
+                                except Exception as ex:
+                                    messagebox.showerror("Error",f"Error: {str(ex)}")
 
                     def on_enter_addemp(e):
                         modify_btn.config(bg='#01d449',fg='black')
@@ -1469,5 +1487,4 @@ def login():
     loginbutton.grid(row=3,column=0,pady=40,columnspan=2)
     
     root.mainloop() 
-
 login()
