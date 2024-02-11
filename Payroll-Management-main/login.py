@@ -9,7 +9,7 @@ import random
 from modules import payreceipt
 
 #Establishing a connection in Mysql
-connection = mysql.connector.connect(host='localhost',user='root',passwd='123')
+connection = mysql.connector.connect(host='localhost',user='root',passwd='')
 cursor = connection.cursor()
 
 cursor.execute('CREATE DATABASE IF NOT EXISTS PMS;')
