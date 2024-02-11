@@ -93,7 +93,6 @@ cursor.execute("CREATE TABLE IF NOT EXISTS EMP_EXTRA(EMP_ID INT NOT NULL PRIMARY
 #Adding default bonus,fines etc details to table
 cursor.execute("SELECT CURDATE()")
 curdate = str(cursor.fetchone()[0])
-print(curdate)
 cursor.execute("Select * from EMP_EXTRA WHERE EMP_ID='1';")
 flag = cursor.fetchone()
 
@@ -1110,7 +1109,7 @@ def adminmain():
         rightframe.destroy()
         btn7frame = Frame(window,bg='#F9E8D9')
         btn7frame.place(x=350,y=110,width=840,height=508)
-        label.config(text='Display Payroll...')
+        label.config(text='Add Bonus, Fines, etc...')
         activebtn(7)
 
         btn7frame.columnconfigure(0, weight = 1)
@@ -1204,6 +1203,12 @@ def adminmain():
             
                 def on_leave_showrecemp(e):
                     modify_btn.config(bg='white',fg='#01d449')
+                
+                def on_enter_showrecemp2(e):
+                    back.config(bg='#01d449',fg='black')
+            
+                def on_leave_showrecemp2(e):
+                    back.config(bg='white',fg='#01d449')
 
                 def modify_extra():
                     if Note.get() == "":
@@ -1219,16 +1224,20 @@ def adminmain():
                         mop1 = Mop.get()
                         cursor.execute("SELECT CURDATE();")
                         curdate = cursor.fetchone()[0]
-                        print(Bonus.get(), Other_gain.get(), Fine.get(), Other_ded.get(), mop1, note1, empid)
                         cursor.execute(f"UPDATE EMP_EXTRA SET BONUS = {Bonus.get()}, OTHER_GAIN = {Other_gain.get()}, FINES = {Fine.get()}, OTHER_DED = {Other_ded.get()}, MOP = '{mop1}', NOTE = '{note1}', BONUS_MONTH = '{curdate}' WHERE EMP_ID = {empid};")
                         connection.commit()
-                        print(cursor.fetchwarnings())
                         messagebox.showinfo("Updation Successful","Fine, Bonus etc successfully updated.")
-                
+                        emp_others()
+
                 modify_btn = Button(btn7frame,text='Modify Bonus, Fines etc',command = modify_extra, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
                 modify_btn.bind("<Enter>",on_enter_showrecemp)
                 modify_btn.bind("<Leave>",on_leave_showrecemp)
                 modify_btn.grid(row=7,column=0,columnspan=4,sticky=N,pady=5)
+
+                back = Button(btn7frame,text='Back',command = emp_others, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
+                back.bind("<Enter>",on_enter_showrecemp2)
+                back.bind("<Leave>",on_leave_showrecemp2)
+                back.grid(row=8,column=0,columnspan=4,sticky=N,pady=5)
 
         search_btn = Button(btn7frame,text='Show Bonus, Fines etc',command = other_details, bg='white',fg='#01d449',font=('lato',14),bd=1,relief=SOLID,cursor='hand2',activebackground='black',activeforeground='white')
         search_btn.bind("<Enter>",on_enter_showrecemp)
