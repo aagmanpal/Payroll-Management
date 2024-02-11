@@ -297,7 +297,7 @@ def adminmain():
                         
                         cursor.execute(f"INSERT INTO EMP_DETAILS VALUES ({emp_id.get()},'{emp_name.get()}','{emp_desig.get()}',{int(emp_salary.get())},{int(emp_age.get())},'{emp_gender.get()}','{emp_email.get()}','{dob}','{doj}','{emp_accno.get()}','{str(emp_contact.get())}','{emp_add.get()}');")
                         cursor.execute(f"INSERT INTO EMP_LOANS VALUES({emp_id.get()},0,0,NULL,0);")
-                        cursor.execute(f"INSERT INTO EMP_EXTRA VALUES({emp_id.get()},0,0,0,0,'Net Banking','N/A',{doj});")
+                        cursor.execute(f"INSERT INTO EMP_EXTRA VALUES({emp_id.get()},0,0,0,0,'Net Banking','N/A','{doj}');")
                         connection.commit()
                         messagebox.showinfo("Added :)","Employee Added Successfully...")
                         addemp()
