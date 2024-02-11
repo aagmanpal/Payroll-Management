@@ -9,7 +9,7 @@ import random
 from modules import payreceipt
 
 #Establishing a connection in Mysql
-connection = mysql.connector.connect(host='localhost',user='root',passwd='manusql')
+connection = mysql.connector.connect(host='localhost',user='root',passwd='123')
 cursor = connection.cursor()
 
 cursor.execute('CREATE DATABASE IF NOT EXISTS PMS;')
@@ -129,7 +129,7 @@ def adminmain():
     header_frame.place(x=0,y=0)
     header_image=PhotoImage(file='assets/salary.png')
     header_text=Label(header_frame,image=header_image,text='  EMPLOYEE MANAGEMENT',font=('Adobe Garamond Pro',28,'bold'),compound=LEFT,fg='white',bg='#41b3a3')
-    header_text.place(x=500,y=3)
+    header_text.place(x=355,y=3)
     
     #Right Frame
     rightframe = Frame(window,bg='white')
@@ -1498,5 +1498,4 @@ def login():
     
     root.mainloop() 
 
-#login()
-adminmain()
+login()
