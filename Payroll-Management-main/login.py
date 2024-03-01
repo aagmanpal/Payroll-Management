@@ -120,13 +120,13 @@ def adminmain():
     window.geometry('1200x640+150+60')
     window.minsize(1200,640)
     window.resizable(False,False)
-    window.iconbitmap("assets/salary.ico")
+    window.iconbitmap("Payroll-Management-main/assets/salary.ico")
     window.configure(bg='#41b3a3')
 
     #Header Frame
     header_frame = Frame(window,bg='#41b3a3', height=60, width = 1280)
     header_frame.place(x=0,y=0)
-    header_image=PhotoImage(file='assets/salary.png')
+    header_image=PhotoImage(file='Payroll-Management-main/assets/salary.png')
     header_text=Label(header_frame,image=header_image,text='  EMPLOYEE MANAGEMENT',font=('Adobe Garamond Pro',28,'bold'),compound=LEFT,fg='white',bg='#41b3a3')
     header_text.place(x=355,y=3)
     
@@ -1466,7 +1466,7 @@ def login():
     root.geometry("626x417+400+150")
     root.resizable(False,False)
     root.title("Login Page")
-    root.iconbitmap('assets/user.ico')
+    root.iconbitmap('Payroll-Management-main/assets/user.ico')
     loginframe = Frame(root)
 
     loginframe.columnconfigure(0, weight = 1)
@@ -1477,17 +1477,17 @@ def login():
     loginframe.rowconfigure(3, weight = 1)
     loginframe.place(x=105,y=40)
 
-    logo = PhotoImage(file="assets/login logo.png")
+    logo = PhotoImage(file="Payroll-Management-main/assets/login logo.png")
     logolabel = Label(loginframe,image=logo)
     logolabel.grid(row=0,column=0,columnspan=2)
 
-    userimage = PhotoImage(file="assets/user.png")
+    userimage = PhotoImage(file="Payroll-Management-main/assets/user.png")
     usernamelabel = Label(loginframe,image=userimage,text=" Username:",compound=LEFT,font=('helvetica',18,'bold'))
     usernamelabel.grid(row=1,column=0)
     usernameentry = Entry(loginframe,font=('helvetica',14),bd=3,fg='grey10')
     usernameentry.grid(row=1,column=1)
 
-    padlock = PhotoImage(file="assets/padlock.png")
+    padlock = PhotoImage(file="Payroll-Management-main/assets/padlock.png")
     passwordlabel = Label(loginframe,image=padlock,text=" Password:",compound=LEFT,font=('helvetica',18,'bold'))
     passwordlabel.grid(row=2,column=0)
     passwordentry = Entry(loginframe,font=('helvetica',14),bd=3,fg='grey10')
