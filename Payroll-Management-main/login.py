@@ -267,6 +267,7 @@ def adminmain():
         entry11.grid(column=3,row=4)
         entry12 = Entry(addemp_frame, textvariable=emp_add ,bg='lightyellow',bd=3,font=('Times new roman',16))
         entry12.grid(column=1,row=6,columnspan=3,sticky= E + W,padx=10)
+        
         #Add Employee Button Function
         def saveemp():
             try:
