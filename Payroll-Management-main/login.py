@@ -1455,8 +1455,8 @@ def adminmain():
     #Footer Frame
     footer_frame = Frame(window,bg='#41b3a3',width=1200,height=25)
     footer_frame.place(x=0,y=615)
-    footer_text=Label(footer_frame,text='Developed by Shivaansh, Aagman and Pranjal -- Class XII-A',font=('helvetica',10,'bold'),fg='black',bg='#41b3a3')
-    footer_text.place(x=435,y=2)
+    footer_text=Label(footer_frame,text='Developed by Aagman -- Class XII-A',font=('helvetica',10,'bold'),fg='black',bg='#41b3a3')
+    footer_text.place(x=490,y=2)
 
     window.mainloop()
 
